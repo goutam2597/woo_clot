@@ -22,50 +22,52 @@ class OrdersScreen extends StatelessWidget {
               itemBuilder: (context, i) {
                 final o = orders[i];
                 return Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: const Color(0xFFEAEAEA)),
-            ),
-            child: ListTile(
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 12,
-                vertical: 10,
-              ),
-              title: Text(
-                'Order #${o.id}',
-                style: const TextStyle(fontWeight: FontWeight.w700),
-              ),
-              subtitle: Padding(
-                padding: const EdgeInsets.only(top: 4),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('${o.itemsCount} items • Placed on ${_formatDate(o.createdAt)}'),
-                    const SizedBox(height: 2),
-                    Text('Total: \$${o.total.toStringAsFixed(2)}'),
-                  ],
-                ),
-              ),
-              trailing: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  _StatusChip(status: o.status),
-                  const SizedBox(height: 4),
-                  const Icon(Icons.chevron_right, color: Colors.black38),
-                ],
-              ),
-              onTap: () {
-                final details = _buildDetailsFromRecord(context, o);
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => OrderDetailsScreen(details: details),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: const Color(0xFFEAEAEA)),
+                  ),
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 10,
+                    ),
+                    title: Text(
+                      'Order #${o.id}',
+                      style: const TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                    subtitle: Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${o.itemsCount} items • Placed on ${_formatDate(o.createdAt)}',
+                          ),
+                          const SizedBox(height: 2),
+                          Text('Total: \$${o.total.toStringAsFixed(2)}'),
+                        ],
+                      ),
+                    ),
+                    trailing: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        _StatusChip(status: o.status),
+                        const SizedBox(height: 4),
+                        const Icon(Icons.chevron_right, color: Colors.black38),
+                      ],
+                    ),
+                    onTap: () {
+                      final details = _buildDetailsFromRecord(context, o);
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => OrderDetailsScreen(details: details),
+                        ),
+                      );
+                    },
                   ),
                 );
-              },
-            ),
-          );
               },
             ),
     );
@@ -112,20 +114,45 @@ class _StatusChip extends StatelessWidget {
 }
 
 String _formatDate(DateTime d) {
-  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
   return '${d.day} ${months[d.month - 1]} ${d.year}';
 }
 
 OrderDetails _buildDetailsFromRecord(BuildContext context, OrderRecord r) {
   final items = r.items
-      .map((i) => OrderItem(title: i.title, image: i.image, quantity: i.quantity, price: i.price))
+      .map(
+        (i) => OrderItem(
+          title: i.title,
+          image: i.image,
+          quantity: i.quantity,
+          price: i.price,
+        ),
+      )
       .toList();
   final addr = context.read<AddressController>();
   final has = addr.items.isNotEmpty;
   final a = has
-      ? (addr.items.firstWhere((x) => x.isDefault, orElse: () => addr.items.first))
+      ? (addr.items.firstWhere(
+          (x) => x.isDefault,
+          orElse: () => addr.items.first,
+        ))
       : null;
-  final addrText = has ? '${a!.name}\n${a.line1}\n${a.city}, ${a.state} ${a.zip}\n${a.phone}' : 'No address';
+  final addrText = has
+      ? '${a!.name}\n${a.line1}\n${a.city}, ${a.state} ${a.zip}\n${a.phone}'
+      : 'No address';
   return OrderDetails(
     id: r.id,
     date: _formatDate(r.createdAt),
@@ -139,4 +166,3 @@ OrderDetails _buildDetailsFromRecord(BuildContext context, OrderRecord r) {
     paymentMethod: 'Card',
   );
 }
-
