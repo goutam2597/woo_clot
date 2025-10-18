@@ -1,0 +1,178 @@
+import 'package:flutter/material.dart';
+
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final String? title;
+  final Widget? middle;
+  final Color? backgroundColor;
+  final bool centerTitle;
+  final VoidCallback? onBack;
+  final IconData? rightIcon;
+  final VoidCallback? onRight;
+
+  const CustomAppBar({
+    super.key,
+    this.title,
+    this.middle,
+    this.backgroundColor,
+    this.centerTitle = false,
+    this.onBack,
+    this.rightIcon,
+    this.onRight,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final bool showBack = onBack != null || Navigator.canPop(context);
+    return SafeArea(
+      bottom: false,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: backgroundColor ?? Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.06),
+              blurRadius: 1,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Builder(
+          builder: (context) {
+            if (middle != null) {
+              return Row(
+                children: [
+                  if (showBack)
+                    _BackButton(
+                      onPressed: onBack ?? () => Navigator.maybePop(context),
+                    ),
+                  if (showBack) const SizedBox(width: 12),
+                  Expanded(child: middle!),
+                  if (rightIcon != null) const SizedBox(width: 12),
+                  if (rightIcon != null)
+                    _ActionButton(
+                      icon: rightIcon!,
+                      onPressed: onRight ?? () {},
+                    ),
+                ],
+              );
+            }
+
+            return Stack(
+              alignment: Alignment.center,
+              children: [
+                if (showBack)
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: _BackButton(
+                      onPressed: onBack ?? () => Navigator.maybePop(context),
+                    ),
+                  ),
+                if (title != null)
+                  centerTitle
+                      ? Center(
+                          child: Text(
+                            title!,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        )
+                      : Padding(
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: 56),
+                          child: const Align(
+                            alignment: Alignment.centerLeft,
+                            child: _TitleProxy(),
+                          ),
+                        ),
+                if (rightIcon != null)
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: _ActionButton(
+                      icon: rightIcon!,
+                      onPressed: onRight ?? () {},
+                    ),
+                  ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(56);
+}
+
+class _BackButton extends StatelessWidget {
+  final VoidCallback onPressed;
+  const _BackButton({required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: const Color(0xFFF2F2F2),
+      shape: const CircleBorder(),
+      child: InkWell(
+        customBorder: const CircleBorder(),
+        onTap: onPressed,
+        child: const SizedBox(
+          width: 36,
+          height: 36,
+          child: Icon(
+            Icons.arrow_back_ios_new,
+            size: 18,
+            color: Colors.black87,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ActionButton extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback onPressed;
+  const _ActionButton({required this.icon, required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: const Color(0xFFF2F2F2),
+      shape: const CircleBorder(),
+      child: InkWell(
+        customBorder: const CircleBorder(),
+        onTap: onPressed,
+        child: SizedBox(
+          width: 36,
+          height: 36,
+          child: Icon(icon, size: 20, color: Colors.black87),
+        ),
+      ),
+    );
+  }
+}
+
+// Helper to keep text style consistent when not centering
+class _TitleProxy extends StatelessWidget {
+  const _TitleProxy();
+
+  @override
+  Widget build(BuildContext context) {
+    final parent = context
+        .findAncestorWidgetOfExactType<CustomAppBar>();
+    final title = parent?.title ?? '';
+    return Text(
+      title,
+      textAlign: TextAlign.left,
+      style: const TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w600,
+      ),
+    );
+  }
+}
