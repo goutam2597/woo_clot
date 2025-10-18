@@ -5,6 +5,7 @@ import 'package:flutter_woocommerce/common/widgets/custom_app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_woocommerce/features/cart/data/cart_controller.dart';
 import 'package:flutter_woocommerce/features/order/ui/screens/order_success_screen.dart';
+import 'package:flutter_woocommerce/features/order/data/orders_provider.dart';
 import 'package:flutter_woocommerce/features/profile/data/address_provider.dart';
 import 'package:flutter_woocommerce/features/profile/ui/screens/addresses_screen.dart';
 
@@ -290,6 +291,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     : widget.discount;
                 const delivery = 2.0;
                 final total = discountedSubtotal + delivery;
+                final cartCtrl = context.read<CartController>();
+                context.read<OrdersController>().placeFromCart(
+                      cartCtrl.items,
+                      subtotal: discountedSubtotal,
+                      discount: discount,
+                      delivery: delivery,
+                      total: total,
+                    );
 
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
@@ -303,7 +312,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   ),
                 );
                 // Clear cart via provider
-                context.read<CartController>().clear();
+                cartCtrl.clear();
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.themeColor,
