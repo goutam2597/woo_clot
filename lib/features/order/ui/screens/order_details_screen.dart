@@ -33,11 +33,11 @@ class OrderDetailsScreen extends StatelessWidget {
           const SizedBox(height: 12),
           const Text('Summary', style: TextStyle(fontWeight: FontWeight.w700)),
           const SizedBox(height: 8),
-          _SummaryRow('Subtotal', '\$${details.subtotal.toStringAsFixed(2)}'),
-          _SummaryRow('Shipping', '\$${details.shipping.toStringAsFixed(2)}'),
-          _SummaryRow('Discount', '\$${details.discount.toStringAsFixed(2)}'),
+          _summaryRow('Subtotal', '\$${details.subtotal.toStringAsFixed(2)}'),
+          _summaryRow('Shipping', '\$${details.shipping.toStringAsFixed(2)}'),
+          _summaryRow('Discount', '\$${details.discount.toStringAsFixed(2)}'),
           const Divider(height: 24),
-          _SummaryRow(
+          _summaryRow(
             'Total',
             '\$${details.total.toStringAsFixed(2)}',
             bold: true,
@@ -219,7 +219,7 @@ class _ItemTile extends StatelessWidget {
   }
 }
 
-Widget _SummaryRow(String label, String value, {bool bold = false}) {
+Widget _summaryRow(String label, String value, {bool bold = false}) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 4),
     child: Row(

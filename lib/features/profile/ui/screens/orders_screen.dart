@@ -18,7 +18,7 @@ class OrdersScreen extends StatelessWidget {
           : ListView.separated(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
               itemCount: orders.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 8),
+              separatorBuilder: (_, _) => const SizedBox(height: 8),
               itemBuilder: (context, i) {
                 final o = orders[i];
                 return Container(
