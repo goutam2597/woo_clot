@@ -25,6 +25,7 @@ class _AllProductsState extends State<AllProducts> {
   String _query = '';
 
   Set<String> _selectedCategories = <String>{};
+  String? _navSelectedCategory; // category coming from navigation/provider
   late double _minPrice;
   late double _maxPrice;
   late RangeValues _priceRange;
@@ -125,6 +126,7 @@ class _AllProductsState extends State<AllProducts> {
   Future<void> _openSortSheet() async {
     final chosen = await showModalBottomSheet<SortOption>(
       context: context,
+      isScrollControlled: true,
       backgroundColor: Colors.white,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
@@ -183,6 +185,23 @@ class _AllProductsState extends State<AllProducts> {
       _query = shopSearch.query;
     }
 
+    // Sync category passed via provider (from Home/Categories taps)
+    if (shopSearch.category != _navSelectedCategory) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        setState(() {
+          if (_navSelectedCategory != null) {
+            _selectedCategories.remove(_navSelectedCategory);
+          }
+          _navSelectedCategory = shopSearch.category;
+          if (_navSelectedCategory != null &&
+              _navSelectedCategory!.isNotEmpty) {
+            _selectedCategories.add(_navSelectedCategory!);
+          }
+        });
+      });
+    }
+
     final products = _filteredProducts;
 
     return Scaffold(
@@ -191,23 +210,57 @@ class _AllProductsState extends State<AllProducts> {
         title: SvgPicture.asset(AssetsPath.logoSvg, width: 120),
         actions: const [NotificationAction()],
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(116),
-          child: SearchAndToolbar(
-            controller: _searchController,
-            query: _query,
-            itemCount: products.length,
-            onQueryChanged: (v) {
-              final trimmed = v.trim();
-              setState(() => _query = trimmed);
-              context.read<ShopSearchProvider>().setQuery(trimmed);
-            },
-            onClearQuery: () {
-              _searchController.clear();
-              setState(() => _query = '');
-              context.read<ShopSearchProvider>().clear();
-            },
-            onTapSort: _openSortSheet,
-            onTapFilter: _openFilterSheet,
+          preferredSize: Size.fromHeight(
+            _selectedCategories.isNotEmpty ? 164 : 116,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SearchAndToolbar(
+                controller: _searchController,
+                query: _query,
+                itemCount: products.length,
+                onQueryChanged: (v) {
+                  final trimmed = v.trim();
+                  setState(() => _query = trimmed);
+                  context.read<ShopSearchProvider>().setQuery(trimmed);
+                },
+                onClearQuery: () {
+                  _searchController.clear();
+                  setState(() => _query = '');
+                  context.read<ShopSearchProvider>().clear();
+                },
+                onTapSort: _openSortSheet,
+                onTapFilter: _openFilterSheet,
+              ),
+              if (_selectedCategories.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: _selectedCategories.map((c) {
+                        return InputChip(
+                          label: Text(c),
+                          onDeleted: () {
+                            setState(() {
+                              _selectedCategories.remove(c);
+                              if (_navSelectedCategory == c) {
+                                context
+                                    .read<ShopSearchProvider>()
+                                    .clearCategory();
+                                _navSelectedCategory = null;
+                              }
+                            });
+                          },
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
+            ],
           ),
         ),
       ),

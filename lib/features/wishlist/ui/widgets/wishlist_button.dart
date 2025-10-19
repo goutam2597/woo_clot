@@ -43,7 +43,7 @@ class WishlistButton extends StatelessWidget {
           child: Icon(
             isWished ? Icons.favorite : Icons.favorite_border,
             color: isWished ? Colors.red : Colors.black54,
-            size: 20,
+            size: 32,
           ),
         ),
       ),

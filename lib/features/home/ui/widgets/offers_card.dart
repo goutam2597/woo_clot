@@ -46,7 +46,6 @@ class OffersCard extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  SizedBox(height: 8),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -62,6 +61,7 @@ class OffersCard extends StatelessWidget {
               ),
             ),
           ),
+          Spacer(),
           Expanded(
             flex: 2,
             child: FittedBox(

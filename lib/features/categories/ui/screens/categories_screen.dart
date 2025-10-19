@@ -3,6 +3,9 @@ import 'package:flutter_woocommerce/common/widgets/custom_app_bar.dart';
 import 'package:flutter_woocommerce/features/categories/data/models/categories_model.dart';
 import 'package:flutter_woocommerce/features/categories/ui/widgets/category_list.dart';
 import 'package:flutter_woocommerce/features/products/data/models/products_model.dart';
+import 'package:flutter_woocommerce/features/products/providers/shop_search_provider.dart';
+import 'package:flutter_woocommerce/features/home/data/bottom_nav_controller.dart';
+import 'package:provider/provider.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
@@ -66,7 +69,16 @@ class CategoriesScreen extends StatelessWidget {
                       final c = categories[index];
                       return Column(
                         mainAxisSize: MainAxisSize.min,
-                        children: [CategoryList(categories: c)],
+                        children: [
+                          CategoryList(
+                            categories: c,
+                            onTap: () {
+                              context.read<ShopSearchProvider>().setCategory(c.title);
+                              context.read<BottomNavController>().goTo(1);
+                              Navigator.maybePop(context);
+                            },
+                          ),
+                        ],
                       );
                     },
                   ),

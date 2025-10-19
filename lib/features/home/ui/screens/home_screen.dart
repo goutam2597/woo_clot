@@ -68,7 +68,13 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             const SizedBox(height: 12),
-            _categoryList(widget.categories),
+            _categoryList(
+              widget.categories,
+              onCategoryTap: (title) {
+                context.read<ShopSearchProvider>().setCategory(title);
+                widget.onRequestTabChange?.call(1);
+              },
+            ),
             // Promo Banner Carousel Section
             PromoBannerCarousel(
               onPageChanged: _onBannerPageChanged,
@@ -136,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-SizedBox _categoryList(final List<dynamic> categories) {
+SizedBox _categoryList(final List<dynamic> categories, {required void Function(String title) onCategoryTap}) {
   return SizedBox(
     height: 110,
     child: ListView.separated(
@@ -148,7 +154,10 @@ SizedBox _categoryList(final List<dynamic> categories) {
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
         final category = categories[index];
-        return CategoryList(categories: category);
+        return CategoryList(
+          categories: category,
+          onTap: () => onCategoryTap(category.title),
+        );
       },
     ),
   );

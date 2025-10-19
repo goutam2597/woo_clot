@@ -60,7 +60,6 @@ class _SplashScreenState extends State<SplashScreen>
       end: const Alignment(-0.8, 1.0),
     ).animate(CurvedAnimation(parent: _bgController, curve: Curves.easeInOut));
 
-    // Allow extra time for tagline + background to play nicely
     Timer(const Duration(milliseconds: 1800), () {
       if (!mounted) return;
       Navigator.pushReplacementNamed(context, AppRoutes.bottomNav);
@@ -74,7 +73,6 @@ class _SplashScreenState extends State<SplashScreen>
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // Animated gradient background
           AnimatedBuilder(
             animation: _bgController,
             builder: (context, _) {
@@ -94,78 +92,77 @@ class _SplashScreenState extends State<SplashScreen>
               );
             },
           ),
-          // Logo + glow + tagline
+          // Centered logo with pulsing glow
           Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(
-                  width: 220,
-                  height: 220,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      // Soft pulsing glow behind the logo
-                      AnimatedBuilder(
-                        animation: _bgController,
-                        builder: (context, child) {
-                          return Transform.scale(
-                            scale: _glowScale.value,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                gradient: RadialGradient(
-                                  colors: [
-                                    Colors.white.withValues(alpha: 0.22),
-                                    Colors.white.withValues(alpha: 0.0),
-                                  ],
-                                  stops: const [0.0, 1.0],
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                      // Logo
-                      FadeTransition(
-                        opacity: _fadeAnim,
-                        child: ScaleTransition(
-                          scale: _scaleAnim,
-                          child: SvgPicture.asset(
-                            AssetsPath.logoSvg,
-                            width: 200,
-                            colorFilter: const ColorFilter.mode(
-                              Colors.white,
-                              BlendMode.srcIn,
+            child: SizedBox(
+              width: 220,
+              height: 220,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  AnimatedBuilder(
+                    animation: _bgController,
+                    builder: (context, child) {
+                      return Transform.scale(
+                        scale: _glowScale.value,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: RadialGradient(
+                              colors: [
+                                Colors.white.withValues(alpha: 0.22),
+                                Colors.white.withValues(alpha: 0.0),
+                              ],
+                              stops: const [0.0, 1.0],
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      );
+                    },
                   ),
-                ),
-                const SizedBox(height: 16),
-                // Tagline slide + fade in
-                FadeTransition(
+                  // Logo
+                  FadeTransition(
+                    opacity: _fadeAnim,
+                    child: ScaleTransition(
+                      scale: _scaleAnim,
+                      child: SvgPicture.asset(
+                        AssetsPath.logoSvg,
+                        width: 200,
+                        colorFilter: const ColorFilter.mode(
+                          Colors.white,
+                          BlendMode.srcIn,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // Bottom-powered-by tagline
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: SafeArea(
+              top: false,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 24),
+                child: FadeTransition(
                   opacity: CurvedAnimation(
                     parent: _controller,
                     curve: const Interval(0.35, 1.0, curve: Curves.easeOut),
                   ),
                   child: SlideTransition(
-                    position:
-                        Tween<Offset>(
-                          begin: const Offset(0, 0.25),
-                          end: Offset.zero,
-                        ).animate(
-                          CurvedAnimation(
-                            parent: _controller,
-                            curve: const Interval(
-                              0.35,
-                              1.0,
-                              curve: Curves.easeOutCubic,
-                            ),
-                          ),
-                        ),
+                    position: Tween<Offset>(
+                      begin: const Offset(0, 0.25),
+                      end: Offset.zero,
+                    ).animate(
+                      CurvedAnimation(
+                        parent: _controller,
+                        curve: const Interval(0.35, 1.0,
+                            curve: Curves.easeOutCubic),
+                      ),
+                    ),
                     child: const Text(
                       'Powered by WooClot',
                       style: TextStyle(
@@ -177,7 +174,7 @@ class _SplashScreenState extends State<SplashScreen>
                     ),
                   ),
                 ),
-              ],
+              ),
             ),
           ),
         ],

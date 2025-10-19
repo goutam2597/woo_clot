@@ -8,47 +8,58 @@ class SortSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SizedBox(height: 12),
-          const Text(
-            'Sort by',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(height: 8),
-          SortTile(
-            label: 'Relevance',
-            option: SortOption.relevance,
-            current: current,
-          ),
-          SortTile(
-            label: 'Price: Low to High',
-            option: SortOption.priceLowHigh,
-            current: current,
-          ),
-          SortTile(
-            label: 'Price: High to Low',
-            option: SortOption.priceHighLow,
-            current: current,
-          ),
-          SortTile(
-            label: 'Rating: High to Low',
-            option: SortOption.ratingHighLow,
-            current: current,
-          ),
-          SortTile(
-            label: 'Title: A to Z',
-            option: SortOption.titleAZ,
-            current: current,
-          ),
-          SortTile(
-            label: 'Title: Z to A',
-            option: SortOption.titleZA,
-            current: current,
-          ),
-          const SizedBox(height: 8),
-        ],
+      child: LayoutBuilder(
+        builder: (ctx, constraints) {
+          final maxH = MediaQuery.of(ctx).size.height * 0.8;
+          return ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: maxH),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 12),
+                  const Text(
+                    'Sort by',
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  ),
+                  const SizedBox(height: 8),
+                  SortTile(
+                    label: 'Relevance',
+                    option: SortOption.relevance,
+                    current: current,
+                  ),
+                  SortTile(
+                    label: 'Price: Low to High',
+                    option: SortOption.priceLowHigh,
+                    current: current,
+                  ),
+                  SortTile(
+                    label: 'Price: High to Low',
+                    option: SortOption.priceHighLow,
+                    current: current,
+                  ),
+                  SortTile(
+                    label: 'Rating: High to Low',
+                    option: SortOption.ratingHighLow,
+                    current: current,
+                  ),
+                  SortTile(
+                    label: 'Title: A to Z',
+                    option: SortOption.titleAZ,
+                    current: current,
+                  ),
+                  SortTile(
+                    label: 'Title: Z to A',
+                    option: SortOption.titleZA,
+                    current: current,
+                  ),
+                  const SizedBox(height: 8),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }

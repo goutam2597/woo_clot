@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_woocommerce/app/app_colors.dart';
 import 'package:flutter_woocommerce/features/order/ui/screens/checkout_screen.dart';
@@ -155,7 +154,7 @@ class CheckoutAddressSection extends StatelessWidget {
           const SizedBox(width: 4),
           IconButton(
             tooltip: 'Manage',
-            icon: const Icon(Icons.edit_location_alt_outlined),
+            icon: const Icon(FontAwesomeIcons.penToSquare),
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (_) => const AddressesScreen()),

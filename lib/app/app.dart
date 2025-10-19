@@ -39,7 +39,11 @@ class WooClot extends StatelessWidget {
           if (AppConfig.useDummyData) p.seedDummy();
           return p;
         }),
-        ChangeNotifierProvider(create: (_) => AddressProvider()),
+        ChangeNotifierProvider(create: (_) {
+          final p = AddressProvider();
+          if (AppConfig.useDummyData) p.seedDummy();
+          return p;
+        }),
         ChangeNotifierProvider(create: (_) => PaymentMethodsProvider()),
         ChangeNotifierProvider(create: (_) => ProfileProvider()),
         ChangeNotifierProvider(create: (_) {
