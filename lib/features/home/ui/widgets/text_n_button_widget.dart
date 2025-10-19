@@ -10,11 +10,13 @@ class TextNButtonWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             text,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
           ),
+
           TextButton(
             onPressed: onTap,
             child: Text(

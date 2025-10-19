@@ -1,5 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_woocommerce/features/home/data/bottom_nav_controller.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_woocommerce/common/widgets/dots_indicator.dart';
 import 'package:flutter_woocommerce/features/home/data/models/promo_banner_model.dart';
 import 'package:flutter_woocommerce/features/home/ui/widgets/promo_banner_card.dart';
@@ -33,7 +35,10 @@ class PromoBannerCarousel extends StatelessWidget {
               descriptionText: banner.descriptionText,
               buttonText: banner.buttonText,
               imageUrl: banner.imageUrl,
-              onPressed: () {},
+              onPressed: () {
+                // Jump to Shop tab (index 1) on BottomNav
+                context.read<BottomNavController>().goTo(1);
+              },
             );
           },
         ),

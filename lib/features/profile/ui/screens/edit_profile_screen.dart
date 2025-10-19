@@ -137,8 +137,8 @@ class _AvatarPicker extends StatelessWidget {
           Stack(
             children: [
               Container(
-                width: 100,
-                height: 100,
+                width: 120,
+                height: 120,
                 decoration: BoxDecoration(
                   image: DecorationImage(image: AssetImage(AssetsPath.user)),
                 ),

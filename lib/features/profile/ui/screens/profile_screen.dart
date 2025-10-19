@@ -141,8 +141,8 @@ class _Header extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 84,
-          height: 84,
+          width: 100,
+          height: 100,
           decoration: const BoxDecoration(shape: BoxShape.circle),
           clipBehavior: Clip.antiAlias,
           child: Image.asset(AssetsPath.user, fit: BoxFit.cover),
