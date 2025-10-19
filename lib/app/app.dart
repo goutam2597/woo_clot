@@ -13,6 +13,7 @@ import 'package:flutter_woocommerce/features/profile/providers/payment_methods_p
 import 'package:flutter_woocommerce/features/profile/providers/profile_provider.dart';
 import 'package:flutter_woocommerce/common/utils/unfocus.dart';
 import 'package:flutter_woocommerce/common/utils/smooth_scroll_behavior.dart';
+import 'package:flutter_woocommerce/app/app_config.dart';
 
 class WooClot extends StatelessWidget {
   const WooClot({super.key});
@@ -21,17 +22,31 @@ class WooClot extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => CartProvider()..seedDummy()),
-        ChangeNotifierProvider(create: (_) => WishlistProvider()..seedDummy()),
+        ChangeNotifierProvider(create: (_) {
+          final p = CartProvider();
+          if (AppConfig.useDummyData) p.seedDummy();
+          return p;
+        }),
+        ChangeNotifierProvider(create: (_) {
+          final p = WishlistProvider();
+          if (AppConfig.useDummyData) p.seedDummy();
+          return p;
+        }),
         ChangeNotifierProvider(create: (_) => ShopSearchProvider()),
         ChangeNotifierProvider(create: (_) => BottomNavController()),
-        ChangeNotifierProvider(
-          create: (_) => NotificationsProvider()..seedDummy(),
-        ),
+        ChangeNotifierProvider(create: (_) {
+          final p = NotificationsProvider();
+          if (AppConfig.useDummyData) p.seedDummy();
+          return p;
+        }),
         ChangeNotifierProvider(create: (_) => AddressProvider()),
         ChangeNotifierProvider(create: (_) => PaymentMethodsProvider()),
         ChangeNotifierProvider(create: (_) => ProfileProvider()),
-        ChangeNotifierProvider(create: (_) => OrdersProvider()..seedDummy()),
+        ChangeNotifierProvider(create: (_) {
+          final p = OrdersProvider();
+          if (AppConfig.useDummyData) p.seedDummy();
+          return p;
+        }),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

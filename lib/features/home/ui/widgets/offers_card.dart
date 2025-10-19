@@ -33,65 +33,69 @@ class OffersCard extends StatelessWidget {
         children: [
           Expanded(
             flex: 4,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SizedBox(height: 8),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(icon, color: Colors.white, size: 18),
-                    SizedBox(width: 4),
-                    Text(
-                      subTitle,
-                      style: TextStyle(fontSize: 16, color: Colors.white),
+            child: FittedBox(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                  SizedBox(height: 8),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(icon, color: Colors.white, size: 18),
+                      SizedBox(width: 4),
+                      Text(
+                        subTitle,
+                        style: TextStyle(fontSize: 16, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(
             flex: 2,
-            child: SizedBox(
-              width: 140,
-              child: InkWell(
-                onTap: onTap,
-                child: Container(
-                  height: 44,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.white, width: 2),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'View All',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
+            child: FittedBox(
+              child: SizedBox(
+                width: 140,
+                child: InkWell(
+                  onTap: onTap,
+                  child: Container(
+                    height: 44,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Colors.white, width: 2),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'View All',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 8),
-                      const Icon(
-                        Icons.arrow_forward,
-                        size: 18,
-                        color: Colors.white,
-                      ),
-                    ],
+                        const SizedBox(width: 8),
+                        const Icon(
+                          Icons.arrow_forward,
+                          size: 18,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

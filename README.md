@@ -1,16 +1,46 @@
-# flutter_woocommerce
+# WooClot Flutter – Documentation
 
-A new Flutter project.
+Welcome! This guide helps you set up, customize, and publish the app for CodeCanyon buyers.
 
-## Getting Started
+If you are reviewing this item for submission, skim through this index and the linked guides to validate build, branding, and configuration flows.
 
-This project is a starting point for a Flutter application.
+Contents
+- Getting Started and Requirements
+- Configuration via AppConfig (no code edits required)
+- Branding (app name, icon, splash)
+- Building Releases (Android/iOS) with obfuscation
+- Feature Overview and Demo Data
+- Credits and Licenses
 
-A few resources to get you started if this is your first Flutter project:
+Quick Links
+- Configuration: documentation/configuration.md
+- Branding: documentation/branding.md
+- Build & Publish: documentation/build_and_publish.md
+- Changelog: CHANGELOG.md
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Getting Started
+1) Install Flutter (channel stable) and platform toolchains.
+    - Flutter: 3.9.x or newer (Dart SDK ^3.9.0)
+    - Android: Android Studio + SDK; iOS: Xcode (on macOS)
+2) From the project root, run:
+    - flutter pub get
+    - flutter run
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Feature Highlights
+- Clean architecture with Provider state management
+- Product browsing, details, cart, wishlist, orders, profiles
+- Global smooth transitions and scroll behavior
+- Animated splash intro
+- Sticky checkout button in Cart screen
+
+Demo Data
+The app ships with optional in-memory demo data for cart, wishlist, notifications, and orders. This is ideal for screenshots and quick verification without backend setup. It is controlled at compile time; see documentation/configuration.md.
+
+Support
+For item support (installation questions, small fixes), please reach out using your marketplace purchase email and include:
+- Order ID
+- Flutter doctor output
+- Steps to reproduce (if bug)
+
+Thank you for choosing WooClot!
+

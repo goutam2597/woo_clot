@@ -35,30 +35,9 @@ class WishlistScreen extends StatelessWidget {
                 itemCount: items.length,
                 itemBuilder: (context, index) {
                   final p = items[index];
-                  return Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      ProductCardGrid(product: p, onTap: () {}),
-                      Positioned(
-                        left: 8,
-                        top: 8,
-                        child: Material(
-                          color: Colors.white,
-                          elevation: 1,
-                          shape: const CircleBorder(),
-                          child: InkWell(
-                            customBorder: const CircleBorder(),
-                            onTap: () => wishlist.remove(p),
-                            child: const SizedBox(
-                              width: 32,
-                              height: 32,
-                              child: Icon(Icons.close, size: 18),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
+                  // Rely on the existing WishlistButton overlay inside ProductCardGrid
+                  // to add/remove items from wishlist; remove redundant X button.
+                  return ProductCardGrid(product: p, onTap: () {});
                 },
               ),
       ),

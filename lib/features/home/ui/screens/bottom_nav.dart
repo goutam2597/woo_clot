@@ -187,7 +187,7 @@ class _FloatingPillBar extends StatelessWidget {
             ),
             _NavCapsule(
               index: kOrders,
-              label: 'Wishlist',
+              label: 'Save',
               icon: AssetsPath.wishSvg,
               isSelected: currentIndex == kOrders,
               onTap: onTap,
@@ -239,7 +239,7 @@ class _NavCapsule extends StatelessWidget {
           height: double.infinity,
           width: double.infinity,
           margin: const EdgeInsets.symmetric(horizontal: 6),
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
           decoration: BoxDecoration(
             color: isSelected ? accent.withAlpha(12) : Colors.transparent,
             borderRadius: BorderRadius.circular(12),

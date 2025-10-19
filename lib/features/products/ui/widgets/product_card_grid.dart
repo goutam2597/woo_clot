@@ -32,7 +32,6 @@ class ProductCardGrid extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Image with wishlist button overlay
               Stack(
                 children: [
                   Container(
@@ -76,60 +75,75 @@ class ProductCardGrid extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    Builder(
-                      builder: (context) {
-                        return Row(
-                          children: [
-                            Text(
-                              '\$${product.discount}',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.primaryColor,
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            Text(
-                              '\$${product.discountPercentage}',
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.red,
-                              ),
-                            ),
-                            const Spacer(),
-                            InkWell(
-                              borderRadius: BorderRadius.circular(100),
-                              onTap: () => handleAddToCart(context, product),
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: AppColors.primaryColor,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const Icon(
-                                  Icons.add,
-                                  color: Colors.white,
-                                  size: 24,
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
                     Row(
                       children: [
-                        StarRating(
-                          rating: double.parse(product.rating),
-                          size: 14,
+                        Expanded(
+                          flex: 6,
+                          child: FittedBox(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Builder(
+                                  builder: (context) {
+                                    return Row(
+                                      children: [
+                                        Text(
+                                          '\$${product.discount}',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColors.primaryColor,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          '\$${product.discountPercentage}',
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                                Row(
+                                  children: [
+                                    StarRating(
+                                      rating: double.parse(product.rating),
+                                      size: 14,
+                                    ),
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      '(${product.review})',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                        const SizedBox(width: 4),
-                        Text(
-                          '(${product.review})',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
+                        const Spacer(),
+
+                        InkWell(
+                          borderRadius: BorderRadius.circular(100),
+                          onTap: () => handleAddToCart(context, product),
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryColor,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.add,
+                              color: Colors.white,
+                              size: 22,
+                            ),
                           ),
                         ),
                       ],

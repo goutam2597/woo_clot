@@ -15,7 +15,6 @@ class TextNButtonWidget extends StatelessWidget {
             text,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
           ),
-          Spacer(),
           TextButton(
             onPressed: onTap,
             child: Text(
