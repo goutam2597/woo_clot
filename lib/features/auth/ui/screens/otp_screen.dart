@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_woocommerce/app/app_colors.dart';
 import 'package:flutter_woocommerce/app/routes.dart';
 import 'package:flutter_woocommerce/common/widgets/custom_app_bar.dart';
+import 'package:pinput/pinput.dart';
 
 class OtpVerifyScreen extends StatefulWidget {
   final String contact;
@@ -49,9 +49,9 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
   void _verify() async {
     final v = _code.text.trim();
     if (v.length != 6) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Enter the 6‑digit code')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Enter the 6‑digit code')));
       return;
     }
     setState(() => _sending = true);
@@ -74,26 +74,52 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                subtitle,
-                style: const TextStyle(fontSize: 14),
-              ),
+              Text(subtitle, style: const TextStyle(fontSize: 14)),
               const SizedBox(height: 16),
-              TextField(
-                controller: _code,
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(6)],
-                decoration: InputDecoration(
-                  labelText: '6‑digit code',
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                ),
+              Builder(
+                builder: (context) {
+                  final defaultPinTheme = PinTheme(
+                    width: 56,
+                    height: 56,
+                    textStyle: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: const Color(0xFFEAEAEA)),
+                    ),
+                  );
+                  final focusedPinTheme = defaultPinTheme.copyWith(
+                    decoration: defaultPinTheme.decoration?.copyWith(
+                      border: Border.all(
+                        color: AppColors.primaryColor,
+                        width: 2,
+                      ),
+                    ),
+                  );
+                  final submittedPinTheme = defaultPinTheme.copyWith(
+                    decoration: defaultPinTheme.decoration?.copyWith(
+                      border: Border.all(color: AppColors.primaryColor),
+                    ),
+                  );
+                  return Pinput(
+                    controller: _code,
+                    length: 6,
+                    defaultPinTheme: defaultPinTheme,
+                    focusedPinTheme: focusedPinTheme,
+                    submittedPinTheme: submittedPinTheme,
+                    keyboardType: TextInputType.number,
+                    onCompleted: (_) => _verify(),
+                  );
+                },
               ),
               const SizedBox(height: 12),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   if (_seconds > 0)
                     Text('Resend in 0:${_seconds.toString().padLeft(2, '0')}')
@@ -129,4 +155,3 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
     );
   }
 }
-
