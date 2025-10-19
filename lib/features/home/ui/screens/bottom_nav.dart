@@ -55,7 +55,7 @@ class _BottomNavState extends State<BottomNav> {
     _pageController = PageController(initialPage: _currentIndex);
 
     _pages = [
-      KeepAliveWrapper(child: HomeScreen()),
+      KeepAliveWrapper(child: HomeScreen(onRequestTabChange: _onTapNav)),
       KeepAliveWrapper(child: AllProducts()),
       KeepAliveWrapper(child: CartScreen()),
       KeepAliveWrapper(child: WishlistScreen()),

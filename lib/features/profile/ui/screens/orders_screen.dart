@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_woocommerce/common/widgets/custom_app_bar.dart';
-import 'package:flutter_woocommerce/features/order/ui/screens/order_details_screen.dart';
+import 'package:flutter_woocommerce/features/profile/ui/screens/order_details_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_woocommerce/features/order/data/orders_provider.dart';
 import 'package:flutter_woocommerce/features/profile/data/address_provider.dart';

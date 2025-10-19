@@ -36,7 +36,10 @@ class AddressesScreen extends StatelessWidget {
                 elevation: 0,
               ),
               onPressed: () => _showAddressSheet(context),
-              child: const Text('Add New Address', style: TextStyle(fontWeight: FontWeight.w700)),
+              child: const Text(
+                'Add New Address',
+                style: TextStyle(fontWeight: FontWeight.w700),
+              ),
             ),
           ),
         ],
@@ -44,7 +47,10 @@ class AddressesScreen extends StatelessWidget {
     );
   }
 
-  Future<void> _showAddressSheet(BuildContext context, {AddressModel? initial}) async {
+  Future<void> _showAddressSheet(
+    BuildContext context, {
+    AddressModel? initial,
+  }) async {
     final ctrl = context.read<AddressController>();
     final name = TextEditingController(text: initial?.name ?? '');
     final line1 = TextEditingController(text: initial?.line1 ?? '');
@@ -69,86 +75,111 @@ class AddressesScreen extends StatelessWidget {
             right: 16,
             top: 16,
           ),
-          child: StatefulBuilder(builder: (ctx, setState) {
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  initial == null ? 'Add Address' : 'Edit Address',
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-                ),
-                const SizedBox(height: 12),
-                _field('Label', name),
-                const SizedBox(height: 8),
-                _field('Address Line', line1),
-                const SizedBox(height: 8),
-                Row(children: [
-                  Expanded(child: _field('City', city)),
-                  const SizedBox(width: 8),
-                  Expanded(child: _field('State', state)),
-                ]),
-                const SizedBox(height: 8),
-                Row(children: [
-                  Expanded(child: _field('ZIP', zip, keyboardType: TextInputType.number)),
-                  const SizedBox(width: 8),
-                  Expanded(child: _field('Phone', phone, keyboardType: TextInputType.phone)),
-                ]),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Checkbox(
-                      value: makeDefault,
-                      onChanged: (v) => setState(() => makeDefault = v ?? false),
+          child: StatefulBuilder(
+            builder: (ctx, setState) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    initial == null ? 'Add Address' : 'Edit Address',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
                     ),
-                    const Text('Set as default')
-                  ],
-                ),
-                const SizedBox(height: 8),
-                SizedBox(
-                  height: 48,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.themeColor,
-                      shape: const StadiumBorder(),
-                      elevation: 0,
-                    ),
-                    onPressed: () {
-                      if (initial == null) {
-                        final id = DateTime.now().millisecondsSinceEpoch.toString();
-                        final a = AddressModel(
-                          id: id,
-                          name: name.text.trim(),
-                          line1: line1.text.trim(),
-                          city: city.text.trim(),
-                          state: state.text.trim(),
-                          zip: zip.text.trim(),
-                          phone: phone.text.trim(),
-                          isDefault: makeDefault,
-                        );
-                        ctrl.add(a);
-                        if (makeDefault) ctrl.setDefault(id);
-                      } else {
-                        initial
-                          ..name = name.text.trim()
-                          ..line1 = line1.text.trim()
-                          ..city = city.text.trim()
-                          ..state = state.text.trim()
-                          ..zip = zip.text.trim()
-                          ..phone = phone.text.trim()
-                          ..isDefault = makeDefault;
-                        ctrl.update(initial);
-                        if (makeDefault) ctrl.setDefault(initial.id);
-                      }
-                      Navigator.pop(ctx);
-                    },
-                    child: Text(initial == null ? 'Add Address' : 'Save Changes',
-                        style: const TextStyle(fontWeight: FontWeight.w700)),
                   ),
-                ),
-              ],
-            );
-          }),
+                  const SizedBox(height: 12),
+                  _field('Label', name),
+                  const SizedBox(height: 8),
+                  _field('Address Line', line1),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Expanded(child: _field('City', city)),
+                      const SizedBox(width: 8),
+                      Expanded(child: _field('State', state)),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _field(
+                          'ZIP',
+                          zip,
+                          keyboardType: TextInputType.number,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: _field(
+                          'Phone',
+                          phone,
+                          keyboardType: TextInputType.phone,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: makeDefault,
+                        onChanged: (v) =>
+                            setState(() => makeDefault = v ?? false),
+                      ),
+                      const Text('Set as default'),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  SizedBox(
+                    height: 48,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.themeColor,
+                        shape: const StadiumBorder(),
+                        elevation: 0,
+                      ),
+                      onPressed: () {
+                        if (initial == null) {
+                          final id = DateTime.now().millisecondsSinceEpoch
+                              .toString();
+                          final a = AddressModel(
+                            id: id,
+                            name: name.text.trim(),
+                            line1: line1.text.trim(),
+                            city: city.text.trim(),
+                            state: state.text.trim(),
+                            zip: zip.text.trim(),
+                            phone: phone.text.trim(),
+                            isDefault: makeDefault,
+                          );
+                          ctrl.add(a);
+                          if (makeDefault) ctrl.setDefault(id);
+                        } else {
+                          initial
+                            ..name = name.text.trim()
+                            ..line1 = line1.text.trim()
+                            ..city = city.text.trim()
+                            ..state = state.text.trim()
+                            ..zip = zip.text.trim()
+                            ..phone = phone.text.trim()
+                            ..isDefault = makeDefault;
+                          ctrl.update(initial);
+                          if (makeDefault) ctrl.setDefault(initial.id);
+                        }
+                        Navigator.pop(ctx);
+                      },
+                      child: Text(
+                        initial == null ? 'Add Address' : 'Save Changes',
+                        style: const TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
         );
       },
     );
@@ -161,8 +192,14 @@ class AddressesScreen extends StatelessWidget {
         title: const Text('Confirm'),
         content: Text(msg),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
-          TextButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Delete')),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text('Delete'),
+          ),
         ],
       ),
     );
@@ -170,7 +207,11 @@ class AddressesScreen extends StatelessWidget {
   }
 }
 
-Widget _field(String label, TextEditingController c, {TextInputType? keyboardType}) {
+Widget _field(
+  String label,
+  TextEditingController c, {
+  TextInputType? keyboardType,
+}) {
   return TextField(
     controller: c,
     keyboardType: keyboardType,
@@ -196,7 +237,12 @@ class _AddressCard extends StatelessWidget {
   final VoidCallback onEdit;
   final VoidCallback onDelete;
   final VoidCallback onMakeDefault;
-  const _AddressCard({required this.addr, required this.onEdit, required this.onDelete, required this.onMakeDefault});
+  const _AddressCard({
+    required this.addr,
+    required this.onEdit,
+    required this.onDelete,
+    required this.onMakeDefault,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -211,7 +257,10 @@ class _AddressCard extends StatelessWidget {
         contentPadding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
         title: Row(
           children: [
-            Text(addr.name, style: const TextStyle(fontWeight: FontWeight.w700)),
+            Text(
+              addr.name,
+              style: const TextStyle(fontWeight: FontWeight.w700),
+            ),
             if (addr.isDefault) ...[
               const SizedBox(width: 8),
               Container(
@@ -220,9 +269,16 @@ class _AddressCard extends StatelessWidget {
                   color: AppColors.themeColor.withValues(alpha: 0.08),
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: const Text('Default', style: TextStyle(color: AppColors.themeColor, fontSize: 12, fontWeight: FontWeight.w700)),
+                child: const Text(
+                  'Default',
+                  style: TextStyle(
+                    color: AppColors.themeColor,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
               ),
-            ]
+            ],
           ],
         ),
         subtitle: Padding(
@@ -261,4 +317,3 @@ class _AddressCard extends StatelessWidget {
     );
   }
 }
-

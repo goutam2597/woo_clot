@@ -52,13 +52,7 @@ class OrderSuccessScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
-              _SummaryBox(
-                itemsCount: itemsCount,
-                subtotal: subtotal,
-                discount: discount,
-                delivery: delivery,
-                total: total,
-              ),
+              _summaryBox(itemsCount, subtotal, discount, delivery, total),
               const Spacer(),
               SizedBox(
                 width: double.infinity,
@@ -87,25 +81,14 @@ class OrderSuccessScreen extends StatelessWidget {
       ),
     );
   }
-}
 
-class _SummaryBox extends StatelessWidget {
-  final int itemsCount;
-  final double subtotal;
-  final double discount;
-  final double delivery;
-  final double total;
-
-  const _SummaryBox({
-    required this.itemsCount,
-    required this.subtotal,
-    required this.discount,
-    required this.delivery,
-    required this.total,
-  });
-
-  @override
-  Widget build(BuildContext context) {
+  Container _summaryBox(
+    final int itemsCount,
+    final double subtotal,
+    final double discount,
+    final double delivery,
+    final double total,
+  ) {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
