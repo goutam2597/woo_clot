@@ -85,7 +85,7 @@ class ProductCardGrid extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600,
-                                color: AppColors.themeColor,
+                                color: AppColors.primaryColor,
                               ),
                             ),
                             const SizedBox(width: 8),
@@ -104,7 +104,7 @@ class ProductCardGrid extends StatelessWidget {
                               child: Container(
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
-                                  color: AppColors.themeColor,
+                                  color: AppColors.primaryColor,
                                   shape: BoxShape.circle,
                                 ),
                                 child: const Icon(

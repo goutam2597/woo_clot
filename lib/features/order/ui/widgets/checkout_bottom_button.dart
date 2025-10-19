@@ -31,7 +31,7 @@ class CheckoutBottomButton extends StatelessWidget {
           height: 52,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.themeColor,
+              backgroundColor: AppColors.primaryColor,
               shape: const StadiumBorder(),
               elevation: 0,
             ),

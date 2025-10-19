@@ -25,7 +25,7 @@ class AddressCard extends StatelessWidget {
             color: Color(0xFFF2F2F2),
             shape: BoxShape.circle,
           ),
-          child: const Icon(Icons.location_on, color: AppColors.themeColor),
+          child: const Icon(Icons.location_on, color: AppColors.primaryColor),
         ),
         const SizedBox(width: 12),
         Expanded(
@@ -134,7 +134,7 @@ class _AddressPickerSheetState extends State<AddressPickerSheet> {
               height: 48,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.themeColor,
+                  backgroundColor: AppColors.primaryColor,
                   shape: const StadiumBorder(),
                   elevation: 0,
                 ),
@@ -162,7 +162,7 @@ Container _radioVisual(bool checked) {
     decoration: BoxDecoration(
       shape: BoxShape.circle,
       border: Border.all(
-        color: checked ? AppColors.themeColor : Colors.black26,
+        color: checked ? AppColors.primaryColor : Colors.black26,
         width: checked ? 6 : 1.5,
       ),
     ),

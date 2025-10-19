@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_woocommerce/features/notifications/providers/notifications_provider.dart';
 import 'package:flutter_woocommerce/features/notifications/ui/screens/notifications_screen.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_woocommerce/features/products/providers/shop_search_provider.dart';
 
@@ -15,7 +15,7 @@ class NotificationAction extends StatelessWidget {
       builder: (context, notif, _) {
         final count = notif.unreadCount;
         return Padding(
-          padding: const EdgeInsets.only(right: 8),
+          padding: const EdgeInsets.only(right: 16),
           child: InkWell(
             borderRadius: BorderRadius.circular(20),
             onTap: () {
@@ -31,12 +31,12 @@ class NotificationAction extends StatelessWidget {
               clipBehavior: Clip.none,
               children: [
                 Container(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(10),
                   decoration: const BoxDecoration(
                     color: Color(0xFFF2F2F2),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.notifications_none, size: 20),
+                  child: const Icon(FontAwesomeIcons.bell, size: 20),
                 ),
                 if (count > 0)
                   Positioned(

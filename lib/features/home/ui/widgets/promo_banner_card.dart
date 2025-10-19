@@ -25,7 +25,7 @@ class PromoBannerCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.themeColor,
+        color: AppColors.primaryColor.withValues(alpha: 0.85),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Row(

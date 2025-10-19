@@ -12,6 +12,7 @@ import 'package:flutter_woocommerce/features/profile/providers/address_provider.
 import 'package:flutter_woocommerce/features/profile/providers/payment_methods_provider.dart';
 import 'package:flutter_woocommerce/features/profile/providers/profile_provider.dart';
 import 'package:flutter_woocommerce/common/utils/unfocus.dart';
+import 'package:flutter_woocommerce/common/utils/smooth_scroll_behavior.dart';
 
 class WooClot extends StatelessWidget {
   const WooClot({super.key});
@@ -35,6 +36,7 @@ class WooClot extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
+        scrollBehavior: const SmoothScrollBehavior(),
         initialRoute: AppRoutes.splash,
         onGenerateRoute: AppRouter.onGenerateRoute,
         builder: (context, child) =>

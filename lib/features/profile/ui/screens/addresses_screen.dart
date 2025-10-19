@@ -32,7 +32,7 @@ class AddressesScreen extends StatelessWidget {
             height: 48,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.themeColor,
+                backgroundColor: AppColors.primaryColor,
                 shape: const StadiumBorder(),
                 elevation: 0,
               ),
@@ -137,7 +137,7 @@ class AddressesScreen extends StatelessWidget {
                     height: 48,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.themeColor,
+                        backgroundColor: AppColors.primaryColor,
                         shape: const StadiumBorder(),
                         elevation: 0,
                       ),
@@ -267,13 +267,13 @@ class _AddressCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(
-                  color: AppColors.themeColor.withValues(alpha: 0.08),
+                  color: AppColors.primaryColor.withValues(alpha: 0.08),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: const Text(
                   'Default',
                   style: TextStyle(
-                    color: AppColors.themeColor,
+                    color: AppColors.primaryColor,
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
                   ),

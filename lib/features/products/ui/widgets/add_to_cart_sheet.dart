@@ -87,12 +87,12 @@ Future<void> handleAddToCart(
                           label: Text(values[i]),
                           selected: selected == i,
                           onSelected: (_) => setState(() => onSelect(i)),
-                          selectedColor: AppColors.themeColor.withValues(
+                          selectedColor: AppColors.primaryColor.withValues(
                             alpha: 0.15,
                           ),
                           labelStyle: TextStyle(
                             color: selected == i
-                                ? AppColors.themeColor
+                                ? AppColors.primaryColor
                                 : Colors.black87,
                             fontWeight: selected == i
                                 ? FontWeight.w700
@@ -132,7 +132,7 @@ Future<void> handleAddToCart(
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.themeColor,
+                      backgroundColor: AppColors.primaryColor,
                       shape: const StadiumBorder(),
                       elevation: 0,
                       padding: const EdgeInsets.symmetric(vertical: 4),

@@ -5,7 +5,6 @@ import 'package:flutter_woocommerce/features/auth/ui/screens/splash_screen.dart'
 import 'package:flutter_woocommerce/features/home/ui/screens/bottom_nav.dart';
 import 'package:flutter_woocommerce/features/home/ui/screens/home_screen.dart';
 
-/// Centralized route name constants.
 class AppRoutes {
   AppRoutes._();
 
@@ -16,7 +15,6 @@ class AppRoutes {
   static const String bottomNav = '/nav';
 }
 
-/// Single place to generate routes; add cases as the app grows.
 class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {

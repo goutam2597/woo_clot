@@ -74,12 +74,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 if (title != null)
                   centerTitle
                       ? Center(
-                          child: Text(
-                            title!,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
+                          child: AnimatedSwitcher(
+                            duration: const Duration(milliseconds: 200),
+                            switchInCurve: Curves.easeOutCubic,
+                            switchOutCurve: Curves.easeInCubic,
+                            child: Text(
+                              title!,
+                              key: ValueKey(title),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
                         )
@@ -170,27 +176,39 @@ class _ActionButton extends StatelessWidget {
                 child: Icon(icon, size: 20, color: Colors.black87),
               ),
             ),
-            if (count > 0)
-              Positioned(
-                right: -2,
-                top: -2,
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: Colors.redAccent,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Text(
-                    count > 9 ? '9+' : '$count',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
+            Positioned(
+              right: -2,
+              top: -2,
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 160),
+                switchInCurve: Curves.easeOutCubic,
+                switchOutCurve: Curves.easeInCubic,
+                transitionBuilder: (child, anim) {
+                  return FadeTransition(
+                    opacity: anim,
+                    child: ScaleTransition(scale: Tween(begin: 0.9, end: 1.0).animate(anim), child: child),
+                  );
+                },
+                child: count > 0
+                    ? Container(
+                        key: ValueKey('badge-$count'),
+                        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: Colors.redAccent,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          count > 9 ? '9+' : '$count',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      )
+                    : const SizedBox.shrink(key: ValueKey('badge-0')),
               ),
+            ),
           ],
         ),
       ),
@@ -207,12 +225,18 @@ class _TitleProxy extends StatelessWidget {
     final parent = context
         .findAncestorWidgetOfExactType<CustomAppBar>();
     final title = parent?.title ?? '';
-    return Text(
-      title,
-      textAlign: TextAlign.left,
-      style: const TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.w600,
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 200),
+      switchInCurve: Curves.easeOutCubic,
+      switchOutCurve: Curves.easeInCubic,
+      child: Text(
+        title,
+        key: ValueKey(title),
+        textAlign: TextAlign.left,
+        style: const TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     );
   }

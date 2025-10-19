@@ -40,12 +40,20 @@ class _CartScreenState extends State<CartScreen> {
                     // Items List
                     _CartItemsListView(items: items, cart: cart),
 
-                    SizedBox(height: items.isNotEmpty ? 180 : 16),
+                    const SizedBox(height: 16),
+                    // Order Summary scrolls with content
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: CartSummary(),
+                    ),
+
+                    // Extra space so content isn't hidden behind sticky checkout bar
+                    SizedBox(height: items.isNotEmpty ? 100 : 16),
                   ],
                 ),
               ),
             ),
-      bottomNavigationBar: items.isEmpty ? null : const CartSummary(),
+      bottomNavigationBar: items.isEmpty ? null : const CartCheckoutBar(),
     );
   }
 }

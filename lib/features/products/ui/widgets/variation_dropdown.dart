@@ -57,7 +57,7 @@ class VariationDropdown extends StatelessWidget {
   Widget build(BuildContext context) {
     if (values.isEmpty) return const SizedBox.shrink();
 
-    final primary = AppColors.themeColor;
+    final primary = AppColors.primaryColor;
     final radius = BorderRadius.circular(8);
 
     void openPicker() {
@@ -88,7 +88,7 @@ class VariationDropdown extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: values.length,
                   separatorBuilder: (_, _) =>
-                      const Divider(height: 1, color: AppColors.themeColor),
+                      const Divider(height: 1, color: AppColors.primaryColor),
                   itemBuilder: (ctx, index) {
                     final value = values[index];
                     final selected = index == selectedIndex;
@@ -130,7 +130,7 @@ class VariationDropdown extends StatelessWidget {
         child: Ink(
           decoration: BoxDecoration(
             borderRadius: radius,
-            border: Border.all(color: AppColors.themeColor),
+            border: Border.all(color: AppColors.primaryColor),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Row(

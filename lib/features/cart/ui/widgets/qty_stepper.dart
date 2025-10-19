@@ -15,7 +15,7 @@ class QtyStepper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accent = AppColors.themeColor;
+    final accent = AppColors.primaryColor;
     final text = quantity.toString().padLeft(2, '0');
     return Row(
       mainAxisSize: MainAxisSize.min,

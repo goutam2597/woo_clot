@@ -35,13 +35,13 @@ class CouponsScreen extends StatelessWidget {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.themeColor.withValues(alpha: 0.08),
+                      color: AppColors.primaryColor.withValues(alpha: 0.08),
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Text(
                       c.code,
                       style: const TextStyle(
-                        color: AppColors.themeColor,
+                        color: AppColors.primaryColor,
                         fontWeight: FontWeight.w800,
                         letterSpacing: 0.6,
                       ),

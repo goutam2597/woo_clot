@@ -77,7 +77,7 @@ class OrderDetailsScreen extends StatelessWidget {
               Expanded(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.themeColor,
+                    backgroundColor: AppColors.primaryColor,
                     shape: const StadiumBorder(),
                     elevation: 0,
                   ),
@@ -152,13 +152,13 @@ class _HeaderRow extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           decoration: BoxDecoration(
-            color: AppColors.themeColor.withValues(alpha: 0.08),
+            color: AppColors.primaryColor.withValues(alpha: 0.08),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Text(
             status,
             style: const TextStyle(
-              color: AppColors.themeColor,
+              color: AppColors.primaryColor,
               fontWeight: FontWeight.w700,
             ),
           ),

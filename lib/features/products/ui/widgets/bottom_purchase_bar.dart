@@ -74,7 +74,7 @@ class BottomPurchaseBar extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: onBuyNow,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.themeColor,
+                      backgroundColor: AppColors.primaryColor,
                       elevation: 0,
                     ),
                     child: const Text(

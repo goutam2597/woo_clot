@@ -93,7 +93,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: Text(
                       'Login Now',
                       style: TextStyle(
-                        color: AppColors.themeColor,
+                        color: AppColors.primaryColor,
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                       ),

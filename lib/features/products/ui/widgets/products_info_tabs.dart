@@ -33,7 +33,7 @@ class _ProductInfoAndTabsState extends State<ProductInfoAndTabs> {
                 text: '\$${p.discount}  ',
                 style: const TextStyle(
                   fontSize: 18,
-                  color: AppColors.themeColor,
+                  color: AppColors.primaryColor,
                   fontWeight: FontWeight.w700,
                 ),
                 children: [
@@ -82,7 +82,7 @@ class _ProductInfoAndTabsState extends State<ProductInfoAndTabs> {
                 isScrollable: true,
                 labelColor: Colors.black,
                 unselectedLabelColor: Colors.black54,
-                indicatorColor: AppColors.themeColor,
+                indicatorColor: AppColors.primaryColor,
                 onTap: (i) => setState(() {}),
                 tabs: const [
                   Tab(text: 'Description'),

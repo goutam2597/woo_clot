@@ -5,7 +5,18 @@ class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     fontFamily: 'CircularStd',
     scaffoldBackgroundColor: Colors.white,
-    colorScheme: ColorScheme.fromSeed(seedColor: AppColors.themeColor),
+    colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
+    // Smooth, consistent page transitions across platforms
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: {
+        TargetPlatform.android: ZoomPageTransitionsBuilder(),
+        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+        TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
+        TargetPlatform.windows: ZoomPageTransitionsBuilder(),
+        TargetPlatform.linux: ZoomPageTransitionsBuilder(),
+        TargetPlatform.fuchsia: ZoomPageTransitionsBuilder(),
+      },
+    ),
 
     inputDecorationTheme: InputDecorationTheme(
       fillColor: Colors.white,
@@ -38,7 +49,7 @@ class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.themeColor,
+        backgroundColor: AppColors.primaryColor,
         foregroundColor: Colors.white,
         fixedSize: const Size.fromWidth(double.maxFinite),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),

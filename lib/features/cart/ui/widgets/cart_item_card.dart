@@ -21,7 +21,7 @@ class CartItemCard extends StatelessWidget {
     final oldPrice = _parse(products.price);
     final newPrice = _parse(products.discount);
     final qty = item.quantity;
-    final accent = AppColors.themeColor;
+    final accent = AppColors.primaryColor;
 
     final key = ValueKey(
       '${products.title}-${item.color ?? ''}-${item.size ?? ''}-${item.storage ?? ''}',

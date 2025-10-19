@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_woocommerce/app/assets_path.dart';
 import 'package:flutter_woocommerce/features/home/ui/widgets/offer_banner.dart';
-import 'package:flutter_woocommerce/features/home/ui/widgets/promo_banner.dart';
 import 'package:flutter_woocommerce/features/home/ui/widgets/search_bar_widget.dart';
 import 'package:flutter_woocommerce/features/products/providers/shop_search_provider.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +16,7 @@ import 'package:flutter_woocommerce/features/products/ui/screens/product_details
 import 'package:flutter_woocommerce/features/products/ui/widgets/product_card_horizontal.dart';
 import '../../../categories/data/models/categories_model.dart';
 import '../../../products/data/models/products_model.dart';
+import '../widgets/promo_carousel.dart';
 
 class HomeScreen extends StatefulWidget {
   final categories = dummyCategoryList;

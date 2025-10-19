@@ -37,7 +37,7 @@ class OrderSuccessScreen extends StatelessWidget {
                 ),
                 child: const Icon(
                   Icons.check_circle,
-                  color: AppColors.themeColor,
+                  color: AppColors.primaryColor,
                   size: 72,
                 ),
               ),
@@ -65,7 +65,7 @@ class OrderSuccessScreen extends StatelessWidget {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.themeColor,
+                    backgroundColor: AppColors.primaryColor,
                     shape: const StadiumBorder(),
                     elevation: 0,
                   ),

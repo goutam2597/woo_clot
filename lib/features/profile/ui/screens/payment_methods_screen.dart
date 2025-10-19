@@ -28,7 +28,7 @@ class PaymentMethodsScreen extends StatelessWidget {
             height: 48,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.themeColor,
+                backgroundColor: AppColors.primaryColor,
                 shape: const StadiumBorder(),
                 elevation: 0,
               ),
@@ -130,7 +130,7 @@ class PaymentMethodsScreen extends StatelessWidget {
                     height: 48,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.themeColor,
+                        backgroundColor: AppColors.primaryColor,
                         shape: const StadiumBorder(),
                         elevation: 0,
                       ),
@@ -198,8 +198,8 @@ class _MethodTile extends StatelessWidget {
           vertical: 10,
         ),
         leading: CircleAvatar(
-          backgroundColor: AppColors.themeColor.withValues(alpha: 0.1),
-          child: Icon(_iconFor(method.type), color: AppColors.themeColor),
+          backgroundColor: AppColors.primaryColor.withValues(alpha: 0.1),
+          child: Icon(_iconFor(method.type), color: AppColors.primaryColor),
         ),
         title: Text(
           method.label,

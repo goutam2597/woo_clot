@@ -106,7 +106,7 @@ Container _checkBubble(final bool checked) {
     decoration: BoxDecoration(
       shape: BoxShape.circle,
       border: Border.all(
-        color: checked ? AppColors.themeColor : Colors.black26,
+        color: checked ? AppColors.primaryColor : Colors.black26,
         width: checked ? 5 : 1.5,
       ),
     ),

@@ -1,4 +1,3 @@
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_woocommerce/common/widgets/dots_indicator.dart';
@@ -8,7 +7,8 @@ import 'package:flutter_woocommerce/features/home/ui/widgets/promo_banner_card.d
 class PromoBannerCarousel extends StatelessWidget {
   final dynamic Function(int, CarouselPageChangedReason) onPageChanged;
   final int activeIndex;
-  const PromoBannerCarousel({super.key,
+  const PromoBannerCarousel({
+    super.key,
     required this.onPageChanged,
     required this.activeIndex,
   });

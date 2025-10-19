@@ -13,12 +13,32 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _scaleAnim;
+  late final Animation<double> _fadeAnim;
+
   @override
   void initState() {
     super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1100),
+    );
+    _scaleAnim = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOutBack,
+    ).drive(Tween(begin: 0.85, end: 1.0));
+    _fadeAnim = CurvedAnimation(
+      parent: _controller,
+      curve: const Interval(0.0, 0.7, curve: Curves.easeOut),
+    );
 
-    Timer(const Duration(seconds: 2), () {
+    _controller.forward();
+
+    Timer(const Duration(milliseconds: 1400), () {
+      if (!mounted) return;
       Navigator.pushReplacementNamed(context, AppRoutes.bottomNav);
     });
   }
@@ -26,14 +46,26 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.themeColor,
+      backgroundColor: AppColors.primaryColor,
       body: Center(
-        child: SvgPicture.asset(
-          AssetsPath.logoSvg,
-          width: 200,
-          colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+        child: FadeTransition(
+          opacity: _fadeAnim,
+          child: ScaleTransition(
+            scale: _scaleAnim,
+            child: SvgPicture.asset(
+              AssetsPath.logoSvg,
+              width: 200,
+              colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+            ),
+          ),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }

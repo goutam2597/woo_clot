@@ -225,7 +225,7 @@ class _NavCapsule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color accent = AppColors.themeColor;
+    final Color accent = AppColors.primaryColor;
     final Color iconColor = isSelected ? accent : Colors.black87;
     final Color textColor = isSelected ? accent : Colors.black87;
 

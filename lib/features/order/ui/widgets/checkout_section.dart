@@ -61,7 +61,7 @@ class CheckoutPaymentSection extends StatelessWidget {
               ),
             ),
             Material(
-              color: AppColors.themeColor.withValues(alpha: 0.1),
+              color: AppColors.primaryColor.withValues(alpha: 0.1),
               shape: const CircleBorder(),
               child: InkWell(
                 customBorder: const CircleBorder(),
@@ -73,7 +73,7 @@ class CheckoutPaymentSection extends StatelessWidget {
                 child: const SizedBox(
                   width: 32,
                   height: 32,
-                  child: Icon(Icons.add, color: AppColors.themeColor),
+                  child: Icon(Icons.add, color: AppColors.primaryColor),
                 ),
               ),
             ),

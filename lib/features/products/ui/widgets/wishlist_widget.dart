@@ -51,7 +51,7 @@ class _WishlistIcon extends StatelessWidget {
 
     return Icon(
       isWished ? Icons.favorite : Icons.favorite_border,
-      color: AppColors.themeColor,
+      color: AppColors.primaryColor,
     );
   }
 }

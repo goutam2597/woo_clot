@@ -38,7 +38,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             hintText: widget.hintText,
             suffixIcon: IconButton(
               onPressed: widget.onTap,
-              icon: Icon(widget.icon, size: 20, color: AppColors.themeColor),
+              icon: Icon(widget.icon, size: 20, color: AppColors.primaryColor),
             ),
           ),
         ),

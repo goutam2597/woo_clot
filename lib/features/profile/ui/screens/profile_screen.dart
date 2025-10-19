@@ -116,7 +116,7 @@ class ProfileScreen extends StatelessWidget {
                   child: const Text(
                     'Sign Out',
                     style: TextStyle(
-                      color: AppColors.themeColor,
+                      color: AppColors.primaryColor,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -202,11 +202,11 @@ class _Tile extends StatelessWidget {
                   width: 36,
                   height: 36,
                   decoration: BoxDecoration(
-                    color: AppColors.themeColor.withValues(alpha: 0.1),
+                    color: AppColors.primaryColor.withValues(alpha: 0.1),
                     shape: BoxShape.circle,
                   ),
                   alignment: Alignment.center,
-                  child: Icon(icon, color: AppColors.themeColor),
+                  child: Icon(icon, color: AppColors.primaryColor),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
