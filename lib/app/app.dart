@@ -5,10 +5,13 @@ import 'package:flutter_woocommerce/features/cart/providers/cart_provider.dart';
 import 'package:flutter_woocommerce/features/order/providers/orders_provider.dart';
 import 'package:flutter_woocommerce/features/notifications/providers/notifications_provider.dart';
 import 'package:flutter_woocommerce/features/wishlist/providers/wishlist_provider.dart';
+import 'package:flutter_woocommerce/features/products/providers/shop_search_provider.dart';
+import 'package:flutter_woocommerce/features/home/data/bottom_nav_controller.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_woocommerce/features/profile/providers/address_provider.dart';
 import 'package:flutter_woocommerce/features/profile/providers/payment_methods_provider.dart';
 import 'package:flutter_woocommerce/features/profile/providers/profile_provider.dart';
+import 'package:flutter_woocommerce/common/utils/unfocus.dart';
 
 class WooClot extends StatelessWidget {
   const WooClot({super.key});
@@ -19,6 +22,8 @@ class WooClot extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => CartProvider()..seedDummy()),
         ChangeNotifierProvider(create: (_) => WishlistProvider()..seedDummy()),
+        ChangeNotifierProvider(create: (_) => ShopSearchProvider()),
+        ChangeNotifierProvider(create: (_) => BottomNavController()),
         ChangeNotifierProvider(
           create: (_) => NotificationsProvider()..seedDummy(),
         ),
@@ -32,6 +37,9 @@ class WooClot extends StatelessWidget {
         theme: AppTheme.lightTheme,
         initialRoute: AppRoutes.splash,
         onGenerateRoute: AppRouter.onGenerateRoute,
+        builder: (context, child) =>
+            UnfocusOnTap(child: child ?? const SizedBox.shrink()),
+        navigatorObservers: [UnfocusNavigatorObserver()],
       ),
     );
   }

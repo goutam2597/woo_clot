@@ -59,16 +59,16 @@ class VariationRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const Text(
           'Variations : ',
-          style: TextStyle(fontSize: 12, color: Colors.black87),
+          style: TextStyle(fontSize: 14, color: Colors.black87),
         ),
         Expanded(
           child: Wrap(
             spacing: 6,
-            runSpacing: -8,
+            runSpacing: 6,
             children: _buildVariationChipsFromItem(item),
           ),
         ),

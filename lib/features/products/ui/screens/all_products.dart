@@ -3,6 +3,8 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_woocommerce/features/products/ui/widgets/filter_widget.dart';
 import 'package:flutter_woocommerce/features/products/ui/widgets/search_with_toolbar.dart';
+import 'package:flutter_woocommerce/features/products/providers/shop_search_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_woocommerce/features/products/ui/widgets/sorting_widget.dart';
 
 import 'package:flutter_woocommerce/app/assets_path.dart';
@@ -171,6 +173,16 @@ class _AllProductsState extends State<AllProducts> {
 
   @override
   Widget build(BuildContext context) {
+    // Sync with global shop search query (from Home, etc.)
+    final shopSearch = context.watch<ShopSearchProvider>();
+    if (_searchController.text != shopSearch.query) {
+      _searchController.text = shopSearch.query;
+      _searchController.selection = TextSelection.fromPosition(
+        TextPosition(offset: _searchController.text.length),
+      );
+      _query = shopSearch.query;
+    }
+
     final products = _filteredProducts;
 
     return Scaffold(
@@ -184,10 +196,15 @@ class _AllProductsState extends State<AllProducts> {
             controller: _searchController,
             query: _query,
             itemCount: products.length,
-            onQueryChanged: (v) => setState(() => _query = v.trim()),
+            onQueryChanged: (v) {
+              final trimmed = v.trim();
+              setState(() => _query = trimmed);
+              context.read<ShopSearchProvider>().setQuery(trimmed);
+            },
             onClearQuery: () {
               _searchController.clear();
               setState(() => _query = '');
+              context.read<ShopSearchProvider>().clear();
             },
             onTapSort: _openSortSheet,
             onTapFilter: _openFilterSheet,
@@ -207,6 +224,8 @@ class _AllProductsState extends State<AllProducts> {
             return ProductCardGrid(
               product: products[index],
               onTap: () {
+                // Clear shop search when navigating away
+                context.read<ShopSearchProvider>().clear();
                 Navigator.push(
                   context,
                   MaterialPageRoute(

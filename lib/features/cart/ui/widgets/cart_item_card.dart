@@ -6,6 +6,7 @@ import 'package:flutter_woocommerce/features/cart/providers/cart_provider.dart';
 import 'package:flutter_woocommerce/features/cart/ui/screens/cart_screen.dart';
 import 'package:flutter_woocommerce/features/cart/ui/widgets/qty_stepper.dart';
 import 'package:flutter_woocommerce/features/cart/ui/widgets/variation_row.dart';
+import 'package:flutter_woocommerce/features/products/ui/screens/product_details.dart';
 
 class CartItemCard extends StatelessWidget {
   final CartItem item;
@@ -16,14 +17,14 @@ class CartItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final p = item.product;
-    final oldPrice = _parse(p.price);
-    final newPrice = _parse(p.discount);
+    final products = item.product;
+    final oldPrice = _parse(products.price);
+    final newPrice = _parse(products.discount);
     final qty = item.quantity;
     final accent = AppColors.themeColor;
 
     final key = ValueKey(
-      '${p.title}-${item.color ?? ''}-${item.size ?? ''}-${item.storage ?? ''}',
+      '${products.title}-${item.color ?? ''}-${item.size ?? ''}-${item.storage ?? ''}',
     );
 
     return Dismissible(
@@ -41,88 +42,97 @@ class CartItemCard extends StatelessWidget {
       onDismissed: (_) => cart.remove(item),
       child: Column(
         children: [
-          CardSurface(
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.asset(
-                      p.images,
-                      width: 96,
-                      height: 96,
-                      fit: BoxFit.cover,
+          InkWell(
+            borderRadius: BorderRadius.circular(12) ,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => ProductDetails(products: products)),
+              );
+            },
+            child: CardSurface(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.asset(
+                        products.images,
+                        width: 96,
+                        height: 96,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          p.title,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16,
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            products.title,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 6),
-                        VariationRow(item: item),
-                        const SizedBox(height: 6),
-                        Row(
-                          children: [
-                            StarRating(
-                              rating: double.tryParse(p.rating) ?? 0,
-                              size: 16,
-                            ),
-                            const Spacer(),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(
-                                  'upto ${p.discountPercentage} off',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    color: accent,
-                                    fontWeight: FontWeight.w600,
+                          const SizedBox(height: 6),
+                          VariationRow(item: item),
+                          const SizedBox(height: 6),
+                          Row(
+                            children: [
+                              StarRating(
+                                rating: double.tryParse(products.rating) ?? 0,
+                                size: 16,
+                              ),
+                              const Spacer(),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    'upto ${products.discountPercentage} off',
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      color: accent,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  '\$${oldPrice.toStringAsFixed(2)}',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.grey.shade600,
-                                    decoration: TextDecoration.lineThrough,
-                                    decorationColor: Colors.red,
-                                    decorationThickness: 1.5,
+                                  Text(
+                                    '\$${oldPrice.toStringAsFixed(2)}',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.grey.shade600,
+                                      decoration: TextDecoration.lineThrough,
+                                      decorationColor: Colors.red,
+                                      decorationThickness: 1.5,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            _PricePill(amount: newPrice),
-                            const Spacer(),
-                            QtyStepper(
-                              quantity: qty,
-                              onIncrement: () =>
-                                  cart.setQuantity(item, qty + 1),
-                              onDecrement: () =>
-                                  cart.setQuantity(item, qty - 1),
-                            ),
-                          ],
-                        ),
-                      ],
+                                ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              _PricePill(amount: newPrice),
+                              const Spacer(),
+                              QtyStepper(
+                                quantity: qty,
+                                onIncrement: () =>
+                                    cart.setQuantity(item, qty + 1),
+                                onDecrement: () =>
+                                    cart.setQuantity(item, qty - 1),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

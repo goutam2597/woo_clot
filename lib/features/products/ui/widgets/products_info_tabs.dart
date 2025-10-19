@@ -21,8 +21,8 @@ class _ProductInfoAndTabsState extends State<ProductInfoAndTabs> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               p.title,

@@ -3,12 +3,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_woocommerce/app/app_colors.dart';
 import 'package:flutter_woocommerce/app/assets_path.dart';
 import 'package:flutter_woocommerce/features/cart/providers/cart_provider.dart';
+import 'package:flutter_woocommerce/features/products/providers/shop_search_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_woocommerce/features/home/ui/screens/home_screen.dart';
 import 'package:flutter_woocommerce/features/cart/ui/screens/cart_screen.dart';
 import 'package:flutter_woocommerce/features/products/ui/screens/all_products.dart';
 import 'package:flutter_woocommerce/features/wishlist/ui/screens/wishlist_screen.dart';
 import 'package:flutter_woocommerce/features/profile/ui/screens/profile_screen.dart';
+import 'package:flutter_woocommerce/features/home/data/bottom_nav_controller.dart';
 
 const int kHome = 0;
 const int kStore = 1;
@@ -70,8 +72,16 @@ class _BottomNavState extends State<BottomNav> {
   }
 
   void _onTapNav(int index) {
+    // Dismiss any focused text fields (e.g., search) on navigation
+    FocusManager.instance.primaryFocus?.unfocus();
+    // Clear shop search when leaving the Shop tab
+    if (_currentIndex == kStore && index != kStore) {
+      context.read<ShopSearchProvider>().clear();
+    }
     if (_currentIndex == index) return;
     setState(() => _currentIndex = index);
+    // Keep global BottomNavController in sync to avoid forced reverts
+    context.read<BottomNavController>().goTo(index);
     if (_pageController.hasClients) {
       _pageController.animateToPage(
         index,
@@ -83,6 +93,12 @@ class _BottomNavState extends State<BottomNav> {
 
   @override
   Widget build(BuildContext context) {
+    final requestedIndex = context.watch<BottomNavController>().index;
+    if (requestedIndex != _currentIndex) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _onTapNav(requestedIndex);
+      });
+    }
     return Container(
       decoration: const BoxDecoration(color: Colors.white),
       clipBehavior: Clip.antiAlias,
@@ -102,7 +118,17 @@ class _BottomNavState extends State<BottomNav> {
                 controller: _pageController,
                 allowImplicitScrolling: true,
                 physics: const NeverScrollableScrollPhysics(),
-                onPageChanged: (i) => setState(() => _currentIndex = i),
+                onPageChanged: (i) {
+                  // Also dismiss focus when page changes programmatically
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  // Clear provider search if not on Shop tab
+                  if (i != kStore) {
+                    context.read<ShopSearchProvider>().clear();
+                  }
+                  setState(() => _currentIndex = i);
+                  // Ensure provider reflects actual page selection
+                  context.read<BottomNavController>().goTo(i);
+                },
                 children: _pages,
               ),
             ),

@@ -5,6 +5,8 @@ import 'package:flutter_woocommerce/app/assets_path.dart';
 import 'package:flutter_woocommerce/features/home/ui/widgets/offer_banner.dart';
 import 'package:flutter_woocommerce/features/home/ui/widgets/promo_banner.dart';
 import 'package:flutter_woocommerce/features/home/ui/widgets/search_bar_widget.dart';
+import 'package:flutter_woocommerce/features/products/providers/shop_search_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_woocommerce/features/categories/ui/screens/categories_screen.dart';
 import 'package:flutter_woocommerce/features/categories/ui/widgets/category_list.dart';
 import 'package:flutter_woocommerce/features/home/ui/widgets/notification_action.dart';
@@ -48,7 +50,13 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SearchBarWidget(),
+            SearchBarWidget(
+              onSubmitted: (q) {
+                context.read<ShopSearchProvider>().setQuery(q);
+                widget.onRequestTabChange?.call(1);
+              },
+              clearOnSubmitted: true,
+            ),
             // Featured Categories Section
             TextNButtonWidget(
               text: 'Featured Categories',

@@ -10,6 +10,9 @@ import 'package:flutter_woocommerce/features/products/ui/widgets/bottom_purchase
 import 'package:flutter_woocommerce/features/products/ui/widgets/product_card_grid.dart';
 import 'package:flutter_woocommerce/features/products/ui/widgets/products_info_tabs.dart';
 import 'package:flutter_woocommerce/features/products/ui/widgets/variation_row.dart';
+import 'package:flutter_woocommerce/features/cart/ui/screens/cart_screen.dart';
+import 'package:flutter_woocommerce/features/products/providers/shop_search_provider.dart';
+import 'package:flutter_woocommerce/features/home/data/bottom_nav_controller.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetails extends StatefulWidget {
@@ -63,13 +66,28 @@ class _ProductDetailsState extends State<ProductDetails> {
       _selectedStorageIndex = 0;
     }
 
+    final cartCount = context.watch<CartProvider>().totalQuantity;
+
     return Scaffold(
       appBar: CustomAppBar(
         rightIcon: Icons.shopping_cart_outlined,
+        rightBadgeCount: cartCount,
+        onRight: () {
+          Navigator.of(
+            context,
+          ).push(MaterialPageRoute(builder: (_) => const CartScreen()));
+        },
         centerTitle: false,
         middle: TextField(
           controller: _searchController,
           onChanged: (_) {},
+          onSubmitted: (q) {
+            FocusManager.instance.primaryFocus?.unfocus();
+            context.read<ShopSearchProvider>().setQuery(q);
+            context.read<BottomNavController>().goTo(1);
+            _searchController.clear();
+            Navigator.maybePop(context);
+          },
           decoration: InputDecoration(
             hintText: 'Search product',
             isDense: true,
@@ -112,7 +130,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
               ),
 
-              const SizedBox(height: 16),
+              const SizedBox(height: 4),
 
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),

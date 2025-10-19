@@ -8,6 +8,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback? onBack;
   final IconData? rightIcon;
   final VoidCallback? onRight;
+  final int? rightBadgeCount;
 
   const CustomAppBar({
     super.key,
@@ -18,6 +19,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.onBack,
     this.rightIcon,
     this.onRight,
+    this.rightBadgeCount,
   });
 
   @override
@@ -53,6 +55,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     _ActionButton(
                       icon: rightIcon!,
                       onPressed: onRight ?? () {},
+                      badgeCount: rightBadgeCount,
                     ),
                 ],
               );
@@ -94,6 +97,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     child: _ActionButton(
                       icon: rightIcon!,
                       onPressed: onRight ?? () {},
+                      badgeCount: rightBadgeCount,
                     ),
                   ),
               ],
@@ -137,20 +141,57 @@ class _BackButton extends StatelessWidget {
 class _ActionButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback onPressed;
-  const _ActionButton({required this.icon, required this.onPressed});
+  final int? badgeCount;
+  const _ActionButton({required this.icon, required this.onPressed, this.badgeCount});
 
   @override
   Widget build(BuildContext context) {
+    final int count = badgeCount ?? 0;
     return Material(
       color: const Color(0xFFF2F2F2),
       shape: const CircleBorder(),
       child: InkWell(
         customBorder: const CircleBorder(),
         onTap: onPressed,
-        child: SizedBox(
-          width: 36,
-          height: 36,
-          child: Icon(icon, size: 20, color: Colors.black87),
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            const SizedBox(width: 36, height: 36),
+            const Positioned.fill(
+              child: Center(
+                child: SizedBox(
+                  width: 36,
+                  height: 36,
+                ),
+              ),
+            ),
+            Positioned.fill(
+              child: Center(
+                child: Icon(icon, size: 20, color: Colors.black87),
+              ),
+            ),
+            if (count > 0)
+              Positioned(
+                right: -2,
+                top: -2,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: Colors.redAccent,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(
+                    count > 9 ? '9+' : '$count',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ),
+          ],
         ),
       ),
     );
