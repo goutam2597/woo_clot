@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_woocommerce/app/assets_path.dart';
 import 'package:flutter_woocommerce/common/widgets/custom_app_bar.dart';
 import 'package:flutter_woocommerce/app/app_colors.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_woocommerce/features/profile/providers/profile_provider.dart';
 
@@ -70,12 +72,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               keyboardType: TextInputType.phone,
             ),
             const SizedBox(height: 12),
-            _DateField(
-              label: 'Date of Birth',
-              value: _dob,
-              onPick: (d) => setState(() => _dob = d),
+            const Text(
+              'Date of Birth',
+              style: TextStyle(fontWeight: FontWeight.w600),
             ),
+            const SizedBox(height: 6),
+            _DateField(value: _dob, onPick: (d) => setState(() => _dob = d)),
             const SizedBox(height: 12),
+            const Text('Gender', style: TextStyle(fontWeight: FontWeight.w600)),
+            const SizedBox(height: 6),
             _GenderField(
               value: _gender,
               onChanged: (v) => setState(() => _gender = v),
@@ -125,19 +130,42 @@ class _AvatarPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const CircleAvatar(
-          radius: 30,
-          backgroundImage: AssetImage('assets/dummy/dr.png'),
-        ),
-        const SizedBox(width: 12),
-        TextButton.icon(
-          onPressed: onChange,
-          icon: const Icon(Icons.photo_camera),
-          label: const Text('Change Photo'),
-        ),
-      ],
+    return GestureDetector(
+      onTap: onChange,
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  image: DecorationImage(image: AssetImage(AssetsPath.user)),
+                ),
+              ),
+              Positioned(
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.all(8),
+                  width: 32,
+                  height: 32,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(33),
+                    color: AppColors.primaryColor,
+                  ),
+                  child: Icon(
+                    FontAwesomeIcons.camera,
+                    size: 16,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
@@ -182,14 +210,9 @@ class _Input extends StatelessWidget {
 }
 
 class _DateField extends StatelessWidget {
-  final String label;
   final DateTime? value;
   final ValueChanged<DateTime> onPick;
-  const _DateField({
-    required this.label,
-    required this.value,
-    required this.onPick,
-  });
+  const _DateField({required this.value, required this.onPick});
 
   @override
   Widget build(BuildContext context) {
@@ -204,13 +227,32 @@ class _DateField extends StatelessWidget {
           initialDate: value ?? DateTime(now.year - 20, now.month, now.day),
           firstDate: DateTime(1900),
           lastDate: now,
+          builder: (ctx, child) {
+            final theme = Theme.of(ctx);
+            return Theme(
+              data: theme.copyWith(
+                dialogTheme: theme.dialogTheme.copyWith(
+                  backgroundColor: Colors.white,
+                ),
+                datePickerTheme: theme.datePickerTheme.copyWith(
+                  backgroundColor: Colors.white,
+                ),
+                colorScheme: theme.colorScheme.copyWith(
+                  surface: Colors.white,
+                  primary: AppColors.primaryColor,
+                  onSurface: Colors.black87,
+                ),
+              ),
+              child: child ?? const SizedBox.shrink(),
+            );
+          },
         );
         if (picked != null) onPick(picked);
       },
+
       borderRadius: BorderRadius.circular(12),
       child: InputDecorator(
         decoration: InputDecoration(
-          labelText: label,
           isDense: true,
           filled: true,
           fillColor: Colors.white,
@@ -242,6 +284,9 @@ class _GenderField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
+      dropdownColor: Colors.white,
+      borderRadius: BorderRadius.circular(12),
+      isDense: true,
       initialValue: value,
       items: const [
         DropdownMenuItem(value: 'Male', child: Text('Male')),
@@ -261,7 +306,6 @@ class _GenderField extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: Color(0xFFEAEAEA)),
         ),
-        labelText: 'Gender',
       ),
     );
   }

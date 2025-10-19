@@ -67,4 +67,5 @@ class AssetsPath {
   static const String wt1 = '$_dummyPath/wt1.png';
   static const String wt2 = '$_dummyPath/wt2.png';
   static const String wt3 = '$_dummyPath/wt3.png';
+  static const String user = '$_dummyPath/user.png';
 }

@@ -145,7 +145,7 @@ class _Header extends StatelessWidget {
           height: 84,
           decoration: const BoxDecoration(shape: BoxShape.circle),
           clipBehavior: Clip.antiAlias,
-          child: Image.asset(AssetsPath.dummy2, fit: BoxFit.cover),
+          child: Image.asset(AssetsPath.user, fit: BoxFit.cover),
         ),
         const SizedBox(height: 12),
         Text(

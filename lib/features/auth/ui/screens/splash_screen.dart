@@ -41,7 +41,6 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward();
 
-    // Subtle animated background sweep and pulsing glow
     _bgController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 2600),
@@ -153,16 +152,20 @@ class _SplashScreenState extends State<SplashScreen>
                     curve: const Interval(0.35, 1.0, curve: Curves.easeOut),
                   ),
                   child: SlideTransition(
-                    position: Tween<Offset>(
-                      begin: const Offset(0, 0.25),
-                      end: Offset.zero,
-                    ).animate(
-                      CurvedAnimation(
-                        parent: _controller,
-                        curve: const Interval(0.35, 1.0,
-                            curve: Curves.easeOutCubic),
-                      ),
-                    ),
+                    position:
+                        Tween<Offset>(
+                          begin: const Offset(0, 0.25),
+                          end: Offset.zero,
+                        ).animate(
+                          CurvedAnimation(
+                            parent: _controller,
+                            curve: const Interval(
+                              0.35,
+                              1.0,
+                              curve: Curves.easeOutCubic,
+                            ),
+                          ),
+                        ),
                     child: const Text(
                       'Powered by WooClot',
                       style: TextStyle(
