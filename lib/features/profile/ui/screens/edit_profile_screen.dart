@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_woocommerce/common/widgets/custom_app_bar.dart';
 import 'package:flutter_woocommerce/app/app_colors.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_woocommerce/features/profile/data/profile_provider.dart';
+import 'package:flutter_woocommerce/features/profile/providers/profile_provider.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -22,7 +22,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   void initState() {
     super.initState();
-    final profile = context.read<ProfileController>();
+    final profile = context.read<ProfileProvider>();
     _name = TextEditingController(text: profile.name);
     _email = TextEditingController(text: profile.email);
     _phone = TextEditingController(text: profile.phone);
@@ -48,17 +48,27 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         child: ListView(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
           children: [
-            _AvatarPicker(onChange: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Change avatar')),
-              );
-            }),
+            _AvatarPicker(
+              onChange: () {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(const SnackBar(content: Text('Change avatar')));
+              },
+            ),
             const SizedBox(height: 16),
             _Input(label: 'Full Name', controller: _name),
             const SizedBox(height: 12),
-            _Input(label: 'Email', controller: _email, keyboardType: TextInputType.emailAddress),
+            _Input(
+              label: 'Email',
+              controller: _email,
+              keyboardType: TextInputType.emailAddress,
+            ),
             const SizedBox(height: 12),
-            _Input(label: 'Phone', controller: _phone, keyboardType: TextInputType.phone),
+            _Input(
+              label: 'Phone',
+              controller: _phone,
+              keyboardType: TextInputType.phone,
+            ),
             const SizedBox(height: 12),
             _DateField(
               label: 'Date of Birth',
@@ -83,19 +93,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
                 onPressed: () {
                   FocusScope.of(context).unfocus();
-                  context.read<ProfileController>().update(
-                        name: _name.text.trim(),
-                        email: _email.text.trim(),
-                        phone: _phone.text.trim(),
-                        dob: _dob,
-                        gender: _gender,
-                        country: _country.text.trim(),
-                      );
+                  context.read<ProfileProvider>().update(
+                    name: _name.text.trim(),
+                    email: _email.text.trim(),
+                    phone: _phone.text.trim(),
+                    dob: _dob,
+                    gender: _gender,
+                    country: _country.text.trim(),
+                  );
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Profile updated')),
                   );
                 },
-                child: const Text('Save Changes', style: TextStyle(fontWeight: FontWeight.w700)),
+                child: const Text(
+                  'Save Changes',
+                  style: TextStyle(fontWeight: FontWeight.w700),
+                ),
               ),
             ),
             // Change Password moved to its own screen from Profile.
@@ -133,7 +146,11 @@ class _Input extends StatelessWidget {
   final String label;
   final TextEditingController controller;
   final TextInputType? keyboardType;
-  const _Input({required this.label, required this.controller, this.keyboardType});
+  const _Input({
+    required this.label,
+    required this.controller,
+    this.keyboardType,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -168,11 +185,17 @@ class _DateField extends StatelessWidget {
   final String label;
   final DateTime? value;
   final ValueChanged<DateTime> onPick;
-  const _DateField({required this.label, required this.value, required this.onPick});
+  const _DateField({
+    required this.label,
+    required this.value,
+    required this.onPick,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final text = value == null ? 'Select date' : '${value!.day.toString().padLeft(2, '0')}/${value!.month.toString().padLeft(2, '0')}/${value!.year}';
+    final text = value == null
+        ? 'Select date'
+        : '${value!.day.toString().padLeft(2, '0')}/${value!.month.toString().padLeft(2, '0')}/${value!.year}';
     return InkWell(
       onTap: () async {
         final now = DateTime.now();
@@ -243,5 +266,3 @@ class _GenderField extends StatelessWidget {
     );
   }
 }
-
-// Password section moved to dedicated ChangePasswordScreen.

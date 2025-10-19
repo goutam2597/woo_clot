@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_woocommerce/common/widgets/custom_app_bar.dart';
 import 'package:flutter_woocommerce/app/app_colors.dart';
+import 'package:flutter_woocommerce/features/profile/data/models/address_model.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_woocommerce/features/profile/data/address_provider.dart';
+import 'package:flutter_woocommerce/features/profile/providers/address_provider.dart';
 
 class AddressesScreen extends StatelessWidget {
   const AddressesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final addresses = context.watch<AddressController>().items;
-    final ctrl = context.read<AddressController>();
+    final addresses = context.watch<AddressProvider>().items;
+    final ctrl = context.read<AddressProvider>();
     return Scaffold(
       appBar: const CustomAppBar(title: 'Addresses', centerTitle: true),
       body: ListView(
@@ -18,7 +19,7 @@ class AddressesScreen extends StatelessWidget {
         children: [
           for (final a in addresses)
             _AddressCard(
-              addr: a,
+              address: a,
               onEdit: () => _showAddressSheet(context, initial: a),
               onDelete: () async {
                 final ok = await _confirm(context, 'Delete ${a.name} address?');
@@ -51,7 +52,7 @@ class AddressesScreen extends StatelessWidget {
     BuildContext context, {
     AddressModel? initial,
   }) async {
-    final ctrl = context.read<AddressController>();
+    final ctrl = context.read<AddressProvider>();
     final name = TextEditingController(text: initial?.name ?? '');
     final line1 = TextEditingController(text: initial?.line1 ?? '');
     final city = TextEditingController(text: initial?.city ?? '');
@@ -233,12 +234,12 @@ Widget _field(
 }
 
 class _AddressCard extends StatelessWidget {
-  final AddressModel addr;
+  final AddressModel address;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
   final VoidCallback onMakeDefault;
   const _AddressCard({
-    required this.addr,
+    required this.address,
     required this.onEdit,
     required this.onDelete,
     required this.onMakeDefault,
@@ -258,10 +259,10 @@ class _AddressCard extends StatelessWidget {
         title: Row(
           children: [
             Text(
-              addr.name,
+              address.name,
               style: const TextStyle(fontWeight: FontWeight.w700),
             ),
-            if (addr.isDefault) ...[
+            if (address.isDefault) ...[
               const SizedBox(width: 8),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
@@ -286,16 +287,16 @@ class _AddressCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(addr.line1),
-              Text('${addr.city}, ${addr.state} ${addr.zip}'),
-              Text('Phone: ${addr.phone}'),
+              Text(address.line1),
+              Text('${address.city}, ${address.state} ${address.zip}'),
+              Text('Phone: ${address.phone}'),
             ],
           ),
         ),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (!addr.isDefault)
+            if (!address.isDefault)
               IconButton(
                 tooltip: 'Make default',
                 icon: const Icon(Icons.star_border, color: Colors.black54),

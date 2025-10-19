@@ -33,11 +33,26 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         child: ListView(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
           children: [
-            _pwd('Current Password', _current, _obscureCurrent, () => setState(() => _obscureCurrent = !_obscureCurrent)),
+            _pwd(
+              'Current Password',
+              _current,
+              _obscureCurrent,
+              () => setState(() => _obscureCurrent = !_obscureCurrent),
+            ),
             const SizedBox(height: 12),
-            _pwd('New Password', _new, _obscureNew, () => setState(() => _obscureNew = !_obscureNew)),
+            _pwd(
+              'New Password',
+              _new,
+              _obscureNew,
+              () => setState(() => _obscureNew = !_obscureNew),
+            ),
             const SizedBox(height: 12),
-            _pwd('Confirm Password', _confirm, _obscureConfirm, () => setState(() => _obscureConfirm = !_obscureConfirm)),
+            _pwd(
+              'Confirm Password',
+              _confirm,
+              _obscureConfirm,
+              () => setState(() => _obscureConfirm = !_obscureConfirm),
+            ),
             const SizedBox(height: 24),
             SizedBox(
               height: 48,
@@ -48,7 +63,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   elevation: 0,
                 ),
                 onPressed: _onSubmit,
-                child: const Text('Change Password', style: TextStyle(fontWeight: FontWeight.w700)),
+                child: const Text(
+                  'Change Password',
+                  style: TextStyle(fontWeight: FontWeight.w700),
+                ),
               ),
             ),
           ],
@@ -61,21 +79,26 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     final newPwd = _new.text.trim();
     final confirmPwd = _confirm.text.trim();
     if (newPwd.isEmpty || confirmPwd.isEmpty || newPwd != confirmPwd) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Passwords do not match')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Passwords do not match')));
       return;
     }
     // Demo only: Show success.
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Password changed')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Password changed')));
     _current.clear();
     _new.clear();
     _confirm.clear();
   }
 
-  Widget _pwd(String label, TextEditingController c, bool obscure, VoidCallback toggle) {
+  Widget _pwd(
+    String label,
+    TextEditingController c,
+    bool obscure,
+    VoidCallback toggle,
+  ) {
     return TextField(
       controller: c,
       obscureText: obscure,
@@ -100,4 +123,3 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     );
   }
 }
-

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_woocommerce/common/widgets/custom_app_bar.dart';
 import 'package:flutter_woocommerce/app/app_colors.dart';
+import 'package:flutter_woocommerce/features/order/data/models/order_details.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_woocommerce/features/cart/data/cart_controller.dart';
+import 'package:flutter_woocommerce/features/cart/providers/cart_provider.dart';
 import 'package:flutter_woocommerce/features/cart/ui/screens/cart_screen.dart';
 import 'package:flutter_woocommerce/features/products/data/models/products_model.dart';
 import 'package:flutter_woocommerce/features/categories/data/models/categories_model.dart';
@@ -95,7 +96,7 @@ class OrderDetailsScreen extends StatelessWidget {
   }
 
   void _reorderToCart(BuildContext context) {
-    final cart = context.read<CartController>();
+    final cart = context.read<CartProvider>();
     for (final it in details.items) {
       final product = _findProductFor(it);
       cart.add(product, quantity: it.quantity);
@@ -235,43 +236,4 @@ Widget _summaryRow(String label, String value, {bool bold = false}) {
       ],
     ),
   );
-}
-
-class OrderDetails {
-  final String id;
-  final String date;
-  final String status;
-  final List<OrderItem> items;
-  final double subtotal;
-  final double shipping;
-  final double discount;
-  final double total;
-  final String shippingAddress;
-  final String paymentMethod;
-
-  const OrderDetails({
-    required this.id,
-    required this.date,
-    required this.status,
-    required this.items,
-    required this.subtotal,
-    required this.shipping,
-    required this.discount,
-    required this.total,
-    required this.shippingAddress,
-    required this.paymentMethod,
-  });
-}
-
-class OrderItem {
-  final String title;
-  final String image;
-  final int quantity;
-  final double price;
-  const OrderItem({
-    required this.title,
-    required this.image,
-    required this.quantity,
-    required this.price,
-  });
 }

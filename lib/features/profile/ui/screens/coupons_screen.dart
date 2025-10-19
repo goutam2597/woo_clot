@@ -13,7 +13,7 @@ class CouponsScreen extends StatelessWidget {
       body: ListView.separated(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
         itemCount: coupons.length,
-        separatorBuilder: (_, __) => const SizedBox(height: 8),
+        separatorBuilder: (_, _) => const SizedBox(height: 8),
         itemBuilder: (context, i) {
           final c = coupons[i];
           return Container(
@@ -23,11 +23,17 @@ class CouponsScreen extends StatelessWidget {
               border: Border.all(color: const Color(0xFFEAEAEA)),
             ),
             child: ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 10,
+              ),
               title: Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: AppColors.themeColor.withValues(alpha: 0.08),
                       borderRadius: BorderRadius.circular(6),
@@ -43,7 +49,10 @@ class CouponsScreen extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Expanded(
-                    child: Text(c.title, style: const TextStyle(fontWeight: FontWeight.w700)),
+                    child: Text(
+                      c.title,
+                      style: const TextStyle(fontWeight: FontWeight.w700),
+                    ),
                   ),
                 ],
               ),
@@ -52,10 +61,13 @@ class CouponsScreen extends StatelessWidget {
                 child: Text('Expires: ${c.expiry}'),
               ),
               trailing: TextButton(
-                onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Applied ${c.code}')),
+                onPressed: () => ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text('Applied ${c.code}'))),
+                child: const Text(
+                  'Apply',
+                  style: TextStyle(fontWeight: FontWeight.w700),
                 ),
-                child: const Text('Apply', style: TextStyle(fontWeight: FontWeight.w700)),
               ),
             ),
           );
@@ -75,4 +87,3 @@ const _dummyCoupons = <_Coupon>[
   _Coupon('FREESHIP', 'Free shipping on all items', '15 Jan 2026'),
   _Coupon('WELCOME15', '15% off for new users', '30 Jun 2026'),
 ];
-

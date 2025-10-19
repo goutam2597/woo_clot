@@ -22,12 +22,15 @@ class HelpScreen extends StatelessWidget {
               ),
               child: ExpansionTile(
                 shape: const Border(),
-                title: Text(f.q, style: const TextStyle(fontWeight: FontWeight.w700)),
+                title: Text(
+                  f.q,
+                  style: const TextStyle(fontWeight: FontWeight.w700),
+                ),
                 children: [
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                     child: Text(f.a),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -35,12 +38,12 @@ class HelpScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: OutlinedButton(
-              onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Report a problem')),
-              ),
+              onPressed: () => ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(const SnackBar(content: Text('Report a problem'))),
               child: const Text('Report a problem'),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -53,8 +56,16 @@ class _Faq {
 }
 
 const _dummyFaqs = <_Faq>[
-  _Faq('How do I track my order?', 'You can track your order in the Orders section. Tap on an order to see its current status and tracking details.'),
-  _Faq('What is the return policy?', 'Returns are accepted within 30 days of delivery for most items. Please keep the original packaging and receipt.'),
-  _Faq('How do I apply a coupon?', 'Go to the Cart or Coupons screen and select a coupon. It will be applied during checkout.'),
+  _Faq(
+    'How do I track my order?',
+    'You can track your order in the Orders section. Tap on an order to see its current status and tracking details.',
+  ),
+  _Faq(
+    'What is the return policy?',
+    'Returns are accepted within 30 days of delivery for most items. Please keep the original packaging and receipt.',
+  ),
+  _Faq(
+    'How do I apply a coupon?',
+    'Go to the Cart or Coupons screen and select a coupon. It will be applied during checkout.',
+  ),
 ];
-

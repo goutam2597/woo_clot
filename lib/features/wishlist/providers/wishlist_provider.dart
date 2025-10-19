@@ -3,7 +3,7 @@ import 'dart:collection';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_woocommerce/features/products/data/models/products_model.dart';
 
-class WishlistController extends ChangeNotifier {
+class WishlistProvider extends ChangeNotifier {
   final List<ProductsModel> _items = [];
 
   UnmodifiableListView<ProductsModel> get items => UnmodifiableListView(_items);

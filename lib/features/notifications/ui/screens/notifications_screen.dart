@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_woocommerce/common/widgets/custom_app_bar.dart';
-import 'package:flutter_woocommerce/features/notifications/data/notifications_provider.dart';
+import 'package:flutter_woocommerce/features/notifications/providers/notifications_provider.dart';
 import 'package:flutter_woocommerce/features/notifications/ui/widgets/notifications_tile.dart';
 import 'package:provider/provider.dart';
 
@@ -9,7 +9,7 @@ class NotificationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ctrl = context.watch<NotificationsController>();
+    final ctrl = context.watch<NotificationsProvider>();
     final items = ctrl.items;
     return Scaffold(
       appBar: CustomAppBar(
@@ -48,11 +48,11 @@ class NotificationsScreen extends StatelessWidget {
                       child: const Icon(Icons.delete, color: Colors.white),
                     ),
                     onDismissed: (_) =>
-                        context.read<NotificationsController>().remove(n.id),
+                        context.read<NotificationsProvider>().remove(n.id),
                     child: NotificationsTile(
                       notif: n,
                       onTap: () => context
-                          .read<NotificationsController>()
+                          .read<NotificationsProvider>()
                           .markRead(n.id),
                     ),
                   );

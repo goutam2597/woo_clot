@@ -14,7 +14,7 @@ import 'package:flutter_woocommerce/features/profile/ui/screens/contact_screen.d
 import 'package:flutter_woocommerce/features/profile/ui/screens/help_screen.dart';
 import 'package:flutter_woocommerce/features/profile/ui/screens/change_password_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_woocommerce/features/profile/data/profile_provider.dart';
+import 'package:flutter_woocommerce/features/profile/providers/profile_provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -36,8 +36,6 @@ class ProfileScreen extends StatelessWidget {
             children: [
               _Header(),
               const SizedBox(height: 16),
-
-              // Ecommerce related
               _SectionLabel('Shopping'),
               _Tile(
                 icon: Icons.receipt_long,
@@ -66,8 +64,8 @@ class ProfileScreen extends StatelessWidget {
               ),
               const SizedBox(height: 12),
 
-              // Account & app
-              _SectionLabel('Account & App'),
+              // Account
+              _SectionLabel('Account Settings'),
               _Tile(
                 icon: Icons.person_outline,
                 label: 'Profile',
@@ -92,7 +90,9 @@ class ProfileScreen extends StatelessWidget {
                 icon: Icons.share_outlined,
                 label: 'Share App',
                 onTap: () {
-                  Clipboard.setData(const ClipboardData(text: 'https://example.com/app'));
+                  Clipboard.setData(
+                    const ClipboardData(text: 'https://example.com/app'),
+                  );
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Share link copied')),
                   );
@@ -130,16 +130,14 @@ class ProfileScreen extends StatelessWidget {
   }
 
   void _open(BuildContext context, Widget page) {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => page),
-    );
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => page));
   }
 }
 
 class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final profile = context.watch<ProfileController>();
+    final profile = context.watch<ProfileProvider>();
     return Column(
       children: [
         Container(
@@ -147,20 +145,14 @@ class _Header extends StatelessWidget {
           height: 84,
           decoration: const BoxDecoration(shape: BoxShape.circle),
           clipBehavior: Clip.antiAlias,
-          child: Image.asset(
-            AssetsPath.dummy2,
-            fit: BoxFit.cover,
-          ),
+          child: Image.asset(AssetsPath.dummy2, fit: BoxFit.cover),
         ),
         const SizedBox(height: 12),
         Text(
           profile.name,
           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
         ),
-        Text(
-          profile.email,
-          style: TextStyle(color: Colors.grey.shade600),
-        ),
+        Text(profile.email, style: TextStyle(color: Colors.grey.shade600)),
       ],
     );
   }
@@ -235,5 +227,3 @@ class _Tile extends StatelessWidget {
     );
   }
 }
-
-// Intentionally no placeholder page; each tile opens a concrete screen.

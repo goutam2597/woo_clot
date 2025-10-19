@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_woocommerce/features/products/data/models/products_model.dart';
-import 'package:flutter_woocommerce/features/wishlist/data/wishlist_provider.dart';
+import 'package:flutter_woocommerce/features/wishlist/providers/wishlist_provider.dart';
 import 'package:provider/provider.dart';
 
 class WishlistButton extends StatelessWidget {
@@ -9,7 +9,7 @@ class WishlistButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final wishlist = context.watch<WishlistController>();
+    final wishlist = context.watch<WishlistProvider>();
     final isWished = wishlist.contains(product);
     return Material(
       color: Colors.transparent,
@@ -17,7 +17,7 @@ class WishlistButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         onTap: () {
           final wasWished = isWished;
-          context.read<WishlistController>().toggle(product);
+          context.read<WishlistProvider>().toggle(product);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(

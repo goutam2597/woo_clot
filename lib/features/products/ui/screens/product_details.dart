@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_woocommerce/common/widgets/custom_app_bar.dart';
 import 'package:flutter_woocommerce/common/widgets/header_text.dart';
-import 'package:flutter_woocommerce/features/cart/data/cart_controller.dart';
+import 'package:flutter_woocommerce/features/cart/providers/cart_provider.dart';
 import 'package:flutter_woocommerce/features/order/ui/screens/checkout_screen.dart';
 import 'package:flutter_woocommerce/features/products/data/models/products_model.dart';
 import 'package:flutter_woocommerce/features/products/ui/widgets/bottom_purchase_bar.dart';
@@ -164,7 +164,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             );
           },
           onAddToCart: () {
-            final cart = context.read<CartController>();
+            final cart = context.read<CartProvider>();
             final color = (colorOptions.isNotEmpty)
                 ? colorOptions[_selectedColorIndex]
                 : null;

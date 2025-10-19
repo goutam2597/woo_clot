@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_woocommerce/app/app_colors.dart';
 import 'package:flutter_woocommerce/app/assets_path.dart';
-import 'package:flutter_woocommerce/features/cart/data/cart_controller.dart';
+import 'package:flutter_woocommerce/features/cart/providers/cart_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_woocommerce/features/home/ui/screens/home_screen.dart';
 import 'package:flutter_woocommerce/features/cart/ui/screens/cart_screen.dart';
@@ -125,7 +125,7 @@ class _FloatingPillBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final badgeCount = context.watch<CartController>().totalQuantity;
+    final badgeCount = context.watch<CartProvider>().totalQuantity;
     return Padding(
       padding: const EdgeInsets.only(bottom: 16, top: 12),
       child: Container(

@@ -17,7 +17,10 @@ class ContactScreen extends StatelessWidget {
             const SizedBox(height: 12),
             _Row(icon: Icons.phone_outlined, label: '+1 212 555 0000'),
             const SizedBox(height: 12),
-            _Row(icon: Icons.timer_outlined, label: 'Mon–Fri, 9:00 AM – 6:00 PM'),
+            _Row(
+              icon: Icons.timer_outlined,
+              label: 'Mon–Fri, 9:00 AM – 6:00 PM',
+            ),
             const Spacer(),
             Row(
               children: [
@@ -37,7 +40,7 @@ class ContactScreen extends StatelessWidget {
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),
@@ -70,10 +73,12 @@ class _Row extends StatelessWidget {
         ),
         const SizedBox(width: 12),
         Expanded(
-          child: Text(label, style: const TextStyle(fontWeight: FontWeight.w600)),
+          child: Text(
+            label,
+            style: const TextStyle(fontWeight: FontWeight.w600),
+          ),
         ),
       ],
     );
   }
 }
-

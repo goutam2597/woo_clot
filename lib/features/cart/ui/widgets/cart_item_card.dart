@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_woocommerce/app/app_colors.dart';
 import 'package:flutter_woocommerce/common/widgets/rating_star_widget.dart';
-import 'package:flutter_woocommerce/features/cart/data/cart_controller.dart';
+import 'package:flutter_woocommerce/features/cart/data/models/cart_item.dart';
+import 'package:flutter_woocommerce/features/cart/providers/cart_provider.dart';
 import 'package:flutter_woocommerce/features/cart/ui/screens/cart_screen.dart';
 import 'package:flutter_woocommerce/features/cart/ui/widgets/qty_stepper.dart';
 import 'package:flutter_woocommerce/features/cart/ui/widgets/variation_row.dart';
 
 class CartItemCard extends StatelessWidget {
   final CartItem item;
-  final CartController cart;
+  final CartProvider cart;
   const CartItemCard({super.key, required this.item, required this.cart});
 
   static double _parse(String v) => double.tryParse(v) ?? 0.0;

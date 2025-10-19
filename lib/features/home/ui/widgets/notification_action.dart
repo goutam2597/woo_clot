@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_woocommerce/features/notifications/data/notifications_provider.dart';
+import 'package:flutter_woocommerce/features/notifications/providers/notifications_provider.dart';
 import 'package:flutter_woocommerce/features/notifications/ui/screens/notifications_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +10,7 @@ class NotificationAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<NotificationsController>(
+    return Consumer<NotificationsProvider>(
       builder: (context, notif, _) {
         final count = notif.unreadCount;
         return Padding(

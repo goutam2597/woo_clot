@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_woocommerce/app/app_colors.dart';
-import 'package:flutter_woocommerce/features/cart/data/cart_controller.dart';
+import 'package:flutter_woocommerce/features/cart/providers/cart_provider.dart';
 import 'package:flutter_woocommerce/features/products/data/models/products_model.dart';
 import 'package:provider/provider.dart';
 
@@ -8,7 +8,7 @@ Future<void> handleAddToCart(
   BuildContext context,
   ProductsModel product,
 ) async {
-  final cart = context.read<CartController>();
+  final cart = context.read<CartProvider>();
 
   List<String> colors = product.variations
       .map((v) => v.color)

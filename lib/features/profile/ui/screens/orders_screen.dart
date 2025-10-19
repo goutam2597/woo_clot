@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_woocommerce/common/widgets/custom_app_bar.dart';
+import 'package:flutter_woocommerce/features/order/data/models/order_details.dart';
+import 'package:flutter_woocommerce/features/order/data/models/order_items_model.dart';
 import 'package:flutter_woocommerce/features/profile/ui/screens/order_details_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_woocommerce/features/order/data/orders_provider.dart';
-import 'package:flutter_woocommerce/features/profile/data/address_provider.dart';
+import 'package:flutter_woocommerce/features/order/providers/orders_provider.dart';
+import 'package:flutter_woocommerce/features/profile/providers/address_provider.dart';
 
 class OrdersScreen extends StatelessWidget {
   const OrdersScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final orders = context.watch<OrdersController>().items;
+    final orders = context.watch<OrdersProvider>().items;
     return Scaffold(
       appBar: const CustomAppBar(title: 'My Orders', centerTitle: true),
       body: orders.isEmpty
@@ -142,7 +144,7 @@ OrderDetails _buildDetailsFromRecord(BuildContext context, OrderRecord r) {
         ),
       )
       .toList();
-  final addr = context.read<AddressController>();
+  final addr = context.read<AddressProvider>();
   final has = addr.items.isNotEmpty;
   final a = has
       ? (addr.items.firstWhere(

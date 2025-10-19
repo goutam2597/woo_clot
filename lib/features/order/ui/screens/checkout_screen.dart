@@ -5,7 +5,7 @@ import 'package:flutter_woocommerce/features/order/ui/widgets/checkout_section.d
 import 'package:provider/provider.dart';
 
 import 'package:flutter_woocommerce/common/widgets/custom_app_bar.dart';
-import 'package:flutter_woocommerce/features/profile/data/address_provider.dart';
+import 'package:flutter_woocommerce/features/profile/providers/address_provider.dart';
 import 'package:flutter_woocommerce/features/profile/ui/screens/addresses_screen.dart';
 
 enum PaymentMethod { paypal, card, cash }
@@ -32,7 +32,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   static const double deliveryFee = 2.0;
 
   Future<void> _showAddressPicker(BuildContext context) async {
-    final ctrl = context.read<AddressController>();
+    final ctrl = context.read<AddressProvider>();
 
     if (ctrl.items.isEmpty) {
       Navigator.of(
@@ -60,7 +60,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final addressCtrl = context.watch<AddressController>();
+    final addressCtrl = context.watch<AddressProvider>();
 
     final hasAddress = addressCtrl.items.isNotEmpty;
     final defaultAddress = hasAddress

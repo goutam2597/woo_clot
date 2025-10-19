@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_woocommerce/common/widgets/custom_app_bar.dart';
 import 'package:flutter_woocommerce/common/widgets/header_text.dart';
+import 'package:flutter_woocommerce/features/cart/data/models/cart_item.dart';
 import 'package:flutter_woocommerce/features/cart/ui/widgets/cart_item_card.dart';
 import 'package:flutter_woocommerce/features/cart/ui/widgets/cart_summary.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_woocommerce/features/cart/data/cart_controller.dart';
+import 'package:flutter_woocommerce/features/cart/providers/cart_provider.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -16,7 +17,7 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
-    final cart = context.watch<CartController>();
+    final cart = context.watch<CartProvider>();
     final List<CartItem> items = cart.items;
 
     return Scaffold(
@@ -71,7 +72,7 @@ class _CartEmptyState extends StatelessWidget {
 
 class _CartItemsListView extends StatelessWidget {
   final List<CartItem> items;
-  final CartController cart;
+  final CartProvider cart;
   const _CartItemsListView({required this.items, required this.cart});
 
   @override

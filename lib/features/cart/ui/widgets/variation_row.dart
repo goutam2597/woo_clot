@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_woocommerce/features/cart/data/cart_controller.dart';
+import 'package:flutter_woocommerce/features/cart/data/models/cart_item.dart';
 import 'package:flutter_woocommerce/features/products/data/models/products_model.dart';
 
 class VariationRow extends StatelessWidget {
   final CartItem item;
   const VariationRow({super.key, required this.item});
-
 
   static List<Widget> _buildVariationChips(ProductsModel p) {
     final values = <String>{};
@@ -24,14 +23,14 @@ class VariationRow extends StatelessWidget {
     return chips
         .map(
           (e) => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        decoration: BoxDecoration(
-          color: const Color(0xFFF2F2F2),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Text(e, style: const TextStyle(fontSize: 11)),
-      ),
-    )
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: const Color(0xFFF2F2F2),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(e, style: const TextStyle(fontSize: 11)),
+          ),
+        )
         .toList();
   }
 
@@ -46,14 +45,14 @@ class VariationRow extends StatelessWidget {
     return chips
         .map(
           (e) => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        decoration: BoxDecoration(
-          color: const Color(0xFFF2F2F2),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Text(e, style: const TextStyle(fontSize: 11)),
-      ),
-    )
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: const Color(0xFFF2F2F2),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(e, style: const TextStyle(fontSize: 11)),
+          ),
+        )
         .toList();
   }
 

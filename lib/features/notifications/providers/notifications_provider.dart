@@ -1,30 +1,12 @@
 import 'dart:collection';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_woocommerce/features/notifications/data/models/notifications_model.dart';
 
-enum NotificationType { order, promo, message, system }
-
-class AppNotification {
-  final String id;
-  final String title;
-  final String body;
-  final DateTime time;
-  final NotificationType type;
-  bool read;
-
-  AppNotification({
-    required this.id,
-    required this.title,
-    required this.body,
-    required this.time,
-    required this.type,
-    this.read = false,
-  });
-}
-
-class NotificationsController extends ChangeNotifier {
+class NotificationsProvider extends ChangeNotifier {
   final List<AppNotification> _items = [];
 
-  UnmodifiableListView<AppNotification> get items => UnmodifiableListView(_items);
+  UnmodifiableListView<AppNotification> get items =>
+      UnmodifiableListView(_items);
   int get unreadCount => _items.where((n) => !n.read).length;
 
   void seedDummy() {
@@ -68,7 +50,9 @@ class NotificationsController extends ChangeNotifier {
   }
 
   void markAllRead() {
-    for (final n in _items) n.read = true;
+    for (final n in _items) {
+      n.read = true;
+    }
     notifyListeners();
   }
 
@@ -85,4 +69,3 @@ class NotificationsController extends ChangeNotifier {
     notifyListeners();
   }
 }
-

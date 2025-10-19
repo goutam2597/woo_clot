@@ -1,48 +1,9 @@
 import 'dart:collection';
-
 import 'package:flutter/foundation.dart';
+import 'package:flutter_woocommerce/features/cart/data/models/cart_item.dart';
 import 'package:flutter_woocommerce/features/products/data/models/products_model.dart';
 
-class CartItem {
-  final ProductsModel product;
-  final String? color;
-  final String? size;
-  final String? storage;
-  int quantity;
-
-  CartItem({
-    required this.product,
-    this.color,
-    this.size,
-    this.storage,
-    this.quantity = 1,
-  });
-
-  double get unitPrice => double.tryParse(product.discount) ?? 0.0;
-  double get total => unitPrice * quantity;
-
-  // Equality based on product and selected attributes
-  @override
-  bool operator ==(Object other) {
-    return other is CartItem &&
-        other.product.title == product.title &&
-        other.product.images == product.images &&
-        other.color == color &&
-        other.size == size &&
-        other.storage == storage;
-  }
-
-  @override
-  int get hashCode => Object.hash(
-    product.title,
-    product.images,
-    color ?? '',
-    size ?? '',
-    storage ?? '',
-  );
-}
-
-class CartController extends ChangeNotifier {
+class CartProvider extends ChangeNotifier {
   final List<CartItem> _items = [];
 
   UnmodifiableListView<CartItem> get items => UnmodifiableListView(_items);
@@ -155,7 +116,6 @@ class CartController extends ChangeNotifier {
     }
   }
 
-  // Seed cart with a few dummy items for demo/testing
   void seedDummy() {
     if (_items.isNotEmpty) return;
     try {
@@ -164,8 +124,6 @@ class CartController extends ChangeNotifier {
       add(list[0], quantity: 1);
       if (list.length > 1) add(list[1], quantity: 2);
       if (list.length > 2) add(list[2], quantity: 1);
-    } catch (_) {
-      // ignore if dummy list unavailable
-    }
+    } catch (_) {}
   }
 }

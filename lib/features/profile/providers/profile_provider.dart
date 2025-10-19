@@ -1,14 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_woocommerce/app/assets_path.dart';
 
-class ProfileController extends ChangeNotifier {
+class ProfileProvider extends ChangeNotifier {
   String name = 'Mark Adam';
   String email = 'Sunny_Koelpin45@hotmail.com';
   String phone = '+1 212 555 2222';
-  DateTime? dob; // null -> not set
-  String gender = 'Male'; // Male, Female, Other
+  DateTime? dob;
+  String gender = 'Male';
   String country = 'United States';
-  String avatar = AssetsPath.dummy2; // asset path or URL
+  String avatar = AssetsPath.userSvg;
 
   void update({
     String? name,

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_woocommerce/common/widgets/custom_app_bar.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:flutter_woocommerce/features/wishlist/data/wishlist_provider.dart';
-
+import 'package:flutter_woocommerce/features/wishlist/providers/wishlist_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_woocommerce/features/products/ui/widgets/product_card_grid.dart';
 
@@ -11,7 +10,7 @@ class WishlistScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final wishlist = context.watch<WishlistController>();
+    final wishlist = context.watch<WishlistProvider>();
     final items = wishlist.items;
 
     return Scaffold(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_woocommerce/app/app_colors.dart';
-import 'package:flutter_woocommerce/features/cart/data/cart_controller.dart';
-import 'package:flutter_woocommerce/features/order/data/orders_provider.dart';
+import 'package:flutter_woocommerce/features/cart/providers/cart_provider.dart';
+import 'package:flutter_woocommerce/features/order/providers/orders_provider.dart';
 import 'package:flutter_woocommerce/features/order/ui/screens/order_success_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -36,8 +36,8 @@ class CheckoutBottomButton extends StatelessWidget {
               elevation: 0,
             ),
             onPressed: () {
-              final cartCtrl = context.read<CartController>();
-              context.read<OrdersController>().placeFromCart(
+              final cartCtrl = context.read<CartProvider>();
+              context.read<OrdersProvider>().placeFromCart(
                 cartCtrl.items,
                 subtotal: subtotal,
                 discount: discount,

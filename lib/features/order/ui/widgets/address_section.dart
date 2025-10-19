@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_woocommerce/app/app_colors.dart';
-import 'package:flutter_woocommerce/features/profile/data/address_provider.dart';
+import 'package:flutter_woocommerce/features/profile/providers/address_provider.dart';
 
 class AddressCard extends StatelessWidget {
   final String title;
@@ -53,7 +53,7 @@ class AddressPickerSheet extends StatefulWidget {
   });
 
   final String selectedId;
-  final AddressController controller;
+  final AddressProvider controller;
 
   @override
   State<AddressPickerSheet> createState() => _AddressPickerSheetState();

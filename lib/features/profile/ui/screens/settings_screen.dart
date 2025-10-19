@@ -23,8 +23,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
         children: [
           _switch('Push Notifications', push, (v) => setState(() => push = v)),
           _switch('Email Updates', email, (v) => setState(() => email = v)),
-          _switch('Newsletter', newsletter, (v) => setState(() => newsletter = v)),
-          _switch('Location Services', location, (v) => setState(() => location = v)),
+          _switch(
+            'Newsletter',
+            newsletter,
+            (v) => setState(() => newsletter = v),
+          ),
+          _switch(
+            'Location Services',
+            location,
+            (v) => setState(() => location = v),
+          ),
         ],
       ),
     );
@@ -34,7 +42,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Card(
       elevation: 0,
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: const BorderSide(color: Color(0xFFEAEAEA))),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: const BorderSide(color: Color(0xFFEAEAEA)),
+      ),
       child: SwitchListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
         value: value,
@@ -44,4 +55,3 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 }
-

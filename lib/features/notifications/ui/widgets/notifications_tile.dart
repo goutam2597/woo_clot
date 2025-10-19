@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_woocommerce/features/notifications/data/notifications_provider.dart';
+import 'package:flutter_woocommerce/features/notifications/data/models/notifications_model.dart';
 
 class NotificationsTile extends StatelessWidget {
   final AppNotification notif;

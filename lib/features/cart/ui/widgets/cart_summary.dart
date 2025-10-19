@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_woocommerce/app/app_colors.dart';
-import 'package:flutter_woocommerce/features/cart/data/cart_controller.dart';
+import 'package:flutter_woocommerce/features/cart/providers/cart_provider.dart';
 import 'package:flutter_woocommerce/features/order/ui/screens/checkout_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +10,7 @@ class CartSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cart = context.watch<CartController>();
+    final cart = context.watch<CartProvider>();
     final itemsCount = cart.totalQuantity;
     final discountedSubtotal = cart.subtotal;
     final double discount = cart.totalDiscount < 0 ? 0.0 : cart.totalDiscount;
