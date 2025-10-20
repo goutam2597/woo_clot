@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_woocommerce/app/app_colors.dart';
 import 'package:flutter_woocommerce/features/cart/providers/cart_provider.dart';
 import 'package:flutter_woocommerce/features/coupons/providers/coupons_provider.dart';
+import 'package:flutter_woocommerce/features/profile/ui/screens/coupons_screen.dart';
 import 'package:provider/provider.dart';
 
 class CartCouponField extends StatefulWidget {
@@ -20,22 +21,12 @@ class _CartCouponFieldState extends State<CartCouponField> {
     super.dispose();
   }
 
-  void _applyFromText() {
-    final code = _ctrl.text.trim();
-    if (code.isEmpty) return;
-    final coupons = context.read<CouponsProvider>();
-    final found = coupons.findByCode(code);
-    final cart = context.read<CartProvider>();
-    if (found != null) {
-      cart.applyCoupon(found);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Applied coupon ${found.code}')),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Invalid coupon')),
-      );
-    }
+  void _openCoupons() async {
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => const CouponsScreen(popOnApply: true),
+      ),
+    );
   }
 
   @override
@@ -57,86 +48,66 @@ class _CartCouponFieldState extends State<CartCouponField> {
           Row(
             children: [
               Expanded(
-                child: TextField(
-                  controller: _ctrl,
-                  decoration: InputDecoration(
-                    hintText: 'Enter coupon code',
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(color: Color(0xFFEAEAEA)),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(color: Color(0xFFEAEAEA)),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 10,
-                    ),
-                  ),
-                  onSubmitted: (_) => _applyFromText(),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: applied != null
+                      ? Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryColor.withValues(alpha: 0.08),
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: const Color(0xFFEAEAEA)),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'Applied: ${applied.code}',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.primaryColor,
+                                ),
+                              ),
+                              const SizedBox(width: 6),
+                              InkWell(
+                                onTap: () => context.read<CartProvider>().clearCoupon(),
+                                child: const Icon(Icons.close, size: 18),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Text(
+                          saved.isNotEmpty ? 'No coupon applied' : 'Select a coupon',
+                          style: TextStyle(
+                            color: Colors.grey.shade600,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                 ),
               ),
               const SizedBox(width: 8),
               ConstrainedBox(
                 constraints: const BoxConstraints(
-                  minWidth: 88,
-                  maxWidth: 120,
+                  minWidth: 120,
+                  maxWidth: 160,
                   minHeight: 44,
                   maxHeight: 44,
                 ),
                 child: ElevatedButton(
-                  onPressed: _applyFromText,
+                  onPressed: _openCoupons,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryColor,
                     shape: const StadiumBorder(),
                     elevation: 0,
                   ),
                   child: const Text(
-                    'Apply',
+                    'Select Coupon',
                     style: TextStyle(fontWeight: FontWeight.w700),
                   ),
                 ),
               ),
-              if (applied != null) ...[
-                const SizedBox(width: 8),
-                SizedBox(
-                  width: 44,
-                  height: 44,
-                  child: IconButton(
-                    tooltip: 'Remove coupon',
-                    onPressed: () => context.read<CartProvider>().clearCoupon(),
-                    icon: const Icon(Icons.close),
-                  ),
-                ),
-              ],
             ],
           ),
-          if (saved.isNotEmpty) ...[
-            const SizedBox(height: 8),
-            SizedBox(
-              height: 36,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemCount: saved.length,
-                separatorBuilder: (_, __) => const SizedBox(width: 8),
-                itemBuilder: (context, i) {
-                  final c = saved[i];
-                  return ActionChip(
-                    label: Text(c.code),
-                    onPressed: () {
-                      context.read<CartProvider>().applyCoupon(c);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Applied coupon ${c.code}')),
-                      );
-                    },
-                  );
-                },
-              ),
-            ),
-          ],
         ],
       ),
     );
