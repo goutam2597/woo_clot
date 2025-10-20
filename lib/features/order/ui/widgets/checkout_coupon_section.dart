@@ -23,9 +23,7 @@ class _CheckoutCouponSectionState extends State<CheckoutCouponSection> {
 
   void _openCoupons() async {
     await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => const CouponsScreen(popOnApply: true),
-      ),
+      MaterialPageRoute(builder: (_) => const CouponsScreen(popOnApply: true)),
     );
   }
 
@@ -50,8 +48,10 @@ class _CheckoutCouponSectionState extends State<CheckoutCouponSection> {
                 alignment: Alignment.centerLeft,
                 child: applied != null
                     ? Container(
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 8,
+                        ),
                         decoration: BoxDecoration(
                           color: AppColors.primaryColor.withValues(alpha: 0.08),
                           borderRadius: BorderRadius.circular(8),
@@ -69,14 +69,17 @@ class _CheckoutCouponSectionState extends State<CheckoutCouponSection> {
                             ),
                             const SizedBox(width: 6),
                             InkWell(
-                              onTap: () => context.read<CartProvider>().clearCoupon(),
+                              onTap: () =>
+                                  context.read<CartProvider>().clearCoupon(),
                               child: const Icon(Icons.close, size: 18),
                             ),
                           ],
                         ),
                       )
                     : Text(
-                        saved.isNotEmpty ? 'No coupon applied' : 'Select a coupon',
+                        saved.isNotEmpty
+                            ? 'No coupon applied'
+                            : 'Select a coupon',
                         style: TextStyle(
                           color: Colors.grey.shade600,
                           fontWeight: FontWeight.w600,
