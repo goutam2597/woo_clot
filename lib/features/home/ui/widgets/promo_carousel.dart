@@ -36,7 +36,7 @@ class PromoBannerCarousel extends StatelessWidget {
               buttonText: banner.buttonText,
               imageUrl: banner.imageUrl,
               onPressed: () {
-                // Jump to Shop tab (index 1) on BottomNav
+          
                 context.read<BottomNavController>().goTo(1);
               },
             );

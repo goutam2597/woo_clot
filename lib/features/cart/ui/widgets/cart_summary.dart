@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_woocommerce/app/app_colors.dart';
 import 'package:flutter_woocommerce/features/cart/providers/cart_provider.dart';
+import 'package:flutter_woocommerce/features/coupons/data/models/coupon_model.dart';
 import 'package:flutter_woocommerce/features/order/ui/screens/checkout_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -14,8 +15,10 @@ class CartSummary extends StatelessWidget {
     final itemsCount = cart.totalQuantity;
     final discountedSubtotal = cart.subtotal;
     final double discount = cart.totalDiscount < 0 ? 0.0 : cart.totalDiscount;
-    const delivery = 2.0;
-    final total = discountedSubtotal + delivery;
+    final double coupon = cart.couponDiscount;
+    final hasFreeShipping = cart.appliedCoupon?.type == CouponType.freeShipping;
+    final double delivery = hasFreeShipping ? 0.0 : 2.0;
+    final total = (discountedSubtotal - coupon) + delivery;
 
     // This summary is intended to scroll with the page content
     return Container(
@@ -46,6 +49,7 @@ class CartSummary extends StatelessWidget {
             '\$${discountedSubtotal.toStringAsFixed(2)}',
           ),
           _summaryRow('Discount', '\$${discount.toStringAsFixed(0)}'),
+          _summaryRow('Coupon', '-\$${coupon.toStringAsFixed(2)}'),
           _summaryRow(
             'Delivery Charges',
             '\$${delivery.toStringAsFixed(0)}',

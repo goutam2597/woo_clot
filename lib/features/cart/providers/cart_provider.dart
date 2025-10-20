@@ -2,9 +2,12 @@ import 'dart:collection';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_woocommerce/features/cart/data/models/cart_item.dart';
 import 'package:flutter_woocommerce/features/products/data/models/products_model.dart';
+import 'package:flutter_woocommerce/features/coupons/data/models/coupon_model.dart';
 
 class CartProvider extends ChangeNotifier {
   final List<CartItem> _items = [];
+  CouponModel? _appliedCoupon;
+  double _couponDiscount = 0.0;
 
   UnmodifiableListView<CartItem> get items => UnmodifiableListView(_items);
 
@@ -20,6 +23,39 @@ class CartProvider extends ChangeNotifier {
   );
 
   double get totalDiscount => originalSubtotal - subtotal;
+
+  CouponModel? get appliedCoupon => _appliedCoupon;
+  double get couponDiscount => _couponDiscount;
+
+  /// Applies a coupon to current cart subtotal (post product-discounts)
+  /// This is a UI-only calculation. Integrate with backend for real validation.
+  void applyCoupon(CouponModel coupon) {
+    _appliedCoupon = coupon;
+    final base = subtotal;
+    double computed = 0.0;
+    switch (coupon.type) {
+      case CouponType.percent:
+        final pct = coupon.amount.clamp(0, 100);
+        computed = base * (pct / 100.0);
+        break;
+      case CouponType.fixed:
+        computed = coupon.amount;
+        break;
+      case CouponType.freeShipping:
+        // Handled in UI by waiving delivery if needed; for now, couponDiscount remains 0
+        computed = 0.0;
+        break;
+    }
+    // Can't discount more than base subtotal
+    _couponDiscount = computed.clamp(0.0, base);
+    notifyListeners();
+  }
+
+  void clearCoupon() {
+    _appliedCoupon = null;
+    _couponDiscount = 0.0;
+    notifyListeners();
+  }
 
   void add(
     ProductsModel product, {
@@ -101,6 +137,7 @@ class CartProvider extends ChangeNotifier {
 
   void clear() {
     _items.clear();
+    clearCoupon();
     notifyListeners();
   }
 

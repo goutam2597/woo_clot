@@ -6,7 +6,7 @@ File: lib/app/app_config.dart
 
 Flags
 - USE_DUMMY_DATA (bool, default: true)
-  - Seeds in-memory demo content for Cart, Wishlist, Notifications, Orders.
+  - Seeds in-memory demo content for Cart, Wishlist, Notifications, Orders, Coupons.
   - Set to `false` for production.
 - ENABLE_LOGS (bool, default: false)
   - Reserved for verbose logs when used in code. Currently a no-op.
@@ -21,4 +21,3 @@ Examples
 
 Notes
 - Demo data is purely local and suitable for previews. Integrating with a live backend or WooCommerce REST API will replace or supplement these providers.
-

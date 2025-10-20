@@ -14,6 +14,7 @@ import 'package:flutter_woocommerce/features/profile/providers/profile_provider.
 import 'package:flutter_woocommerce/common/utils/unfocus.dart';
 import 'package:flutter_woocommerce/common/utils/smooth_scroll_behavior.dart';
 import 'package:flutter_woocommerce/app/app_config.dart';
+import 'package:flutter_woocommerce/features/coupons/providers/coupons_provider.dart';
 
 class WooClot extends StatelessWidget {
   const WooClot({super.key});
@@ -22,35 +23,52 @@ class WooClot extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) {
-          final p = CartProvider();
-          if (AppConfig.useDummyData) p.seedDummy();
-          return p;
-        }),
-        ChangeNotifierProvider(create: (_) {
-          final p = WishlistProvider();
-          if (AppConfig.useDummyData) p.seedDummy();
-          return p;
-        }),
+        ChangeNotifierProvider(
+          create: (_) {
+            final p = CartProvider();
+            if (AppConfig.useDummyData) p.seedDummy();
+            return p;
+          },
+        ),
+        ChangeNotifierProvider(
+          create: (_) {
+            final p = WishlistProvider();
+            if (AppConfig.useDummyData) p.seedDummy();
+            return p;
+          },
+        ),
         ChangeNotifierProvider(create: (_) => ShopSearchProvider()),
         ChangeNotifierProvider(create: (_) => BottomNavController()),
-        ChangeNotifierProvider(create: (_) {
-          final p = NotificationsProvider();
-          if (AppConfig.useDummyData) p.seedDummy();
-          return p;
-        }),
-        ChangeNotifierProvider(create: (_) {
-          final p = AddressProvider();
-          if (AppConfig.useDummyData) p.seedDummy();
-          return p;
-        }),
+        ChangeNotifierProvider(
+          create: (_) {
+            final p = NotificationsProvider();
+            if (AppConfig.useDummyData) p.seedDummy();
+            return p;
+          },
+        ),
+        ChangeNotifierProvider(
+          create: (_) {
+            final p = AddressProvider();
+            if (AppConfig.useDummyData) p.seedDummy();
+            return p;
+          },
+        ),
         ChangeNotifierProvider(create: (_) => PaymentMethodsProvider()),
         ChangeNotifierProvider(create: (_) => ProfileProvider()),
-        ChangeNotifierProvider(create: (_) {
-          final p = OrdersProvider();
-          if (AppConfig.useDummyData) p.seedDummy();
-          return p;
-        }),
+        ChangeNotifierProvider(
+          create: (_) {
+            final p = CouponsProvider();
+            if (AppConfig.useDummyData) p.seedDummy();
+            return p;
+          },
+        ),
+        ChangeNotifierProvider(
+          create: (_) {
+            final p = OrdersProvider();
+            if (AppConfig.useDummyData) p.seedDummy();
+            return p;
+          },
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

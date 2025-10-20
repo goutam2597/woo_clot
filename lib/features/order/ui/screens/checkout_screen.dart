@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_woocommerce/features/order/ui/widgets/address_section.dart';
 import 'package:flutter_woocommerce/features/order/ui/widgets/checkout_bottom_button.dart';
 import 'package:flutter_woocommerce/features/order/ui/widgets/checkout_section.dart';
+import 'package:flutter_woocommerce/features/order/ui/widgets/checkout_coupon_section.dart';
+import 'package:flutter_woocommerce/features/cart/providers/cart_provider.dart';
+import 'package:flutter_woocommerce/features/coupons/data/models/coupon_model.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_woocommerce/common/widgets/custom_app_bar.dart';
@@ -61,6 +64,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   @override
   Widget build(BuildContext context) {
     final addressCtrl = context.watch<AddressProvider>();
+    final cart = context.watch<CartProvider>();
 
     final hasAddress = addressCtrl.items.isNotEmpty;
     final defaultAddress = hasAddress
@@ -72,7 +76,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
     final subtotal = widget.subtotal;
     final discount = widget.discount < 0 ? 0.0 : widget.discount;
-    final total = subtotal + deliveryFee;
+    final coupon = cart.couponDiscount;
+    // Waive delivery if a free-shipping coupon is applied (simple UI behavior)
+    final hasFreeShipping = cart.appliedCoupon?.type == CouponType.freeShipping;
+    final delivery = hasFreeShipping ? 0.0 : deliveryFee;
+    final total = (subtotal - coupon) + delivery;
 
     return Scaffold(
       appBar: const CustomAppBar(title: 'Check Out', centerTitle: true),
@@ -88,11 +96,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 onChange: () => _showAddressPicker(context),
               ),
               const SizedBox(height: 20),
+              const CheckoutCouponSection(),
+              const SizedBox(height: 20),
               CheckoutSummarySection(
                 totalQuantity: widget.totalQuantity,
                 subtotal: subtotal,
                 discount: discount,
-                delivery: deliveryFee,
+                delivery: delivery,
+                coupon: coupon,
               ),
               const SizedBox(height: 20),
               CheckoutPaymentSection(
@@ -107,7 +118,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       bottomNavigationBar: CheckoutBottomButton(
         subtotal: subtotal,
         discount: discount,
-        delivery: deliveryFee,
+        delivery: delivery,
         total: total,
         totalQuantity: widget.totalQuantity,
       ),

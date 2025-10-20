@@ -90,16 +90,18 @@ class CheckoutSummarySection extends StatelessWidget {
     required this.subtotal,
     required this.discount,
     required this.delivery,
+    this.coupon = 0.0,
   });
 
   final int totalQuantity;
   final double subtotal;
   final double discount;
   final double delivery;
+  final double coupon;
 
   @override
   Widget build(BuildContext context) {
-    final total = subtotal + delivery;
+    final total = (subtotal - coupon) + delivery;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,6 +116,7 @@ class CheckoutSummarySection extends StatelessWidget {
             SummaryRow('Items', totalQuantity.toString()),
             SummaryRow('Subtotal', '\$${subtotal.toStringAsFixed(2)}'),
             SummaryRow('Discount', '\$${discount.toStringAsFixed(0)}'),
+            SummaryRow('Coupon', '-\$${coupon.toStringAsFixed(2)}'),
             SummaryRow('Delivery Charges', '\$${delivery.toStringAsFixed(0)}'),
           ],
           total: '\$${total.toStringAsFixed(2)}',

@@ -4,6 +4,7 @@ import 'package:flutter_woocommerce/common/widgets/header_text.dart';
 import 'package:flutter_woocommerce/features/cart/data/models/cart_item.dart';
 import 'package:flutter_woocommerce/features/cart/ui/widgets/cart_item_card.dart';
 import 'package:flutter_woocommerce/features/cart/ui/widgets/cart_summary.dart';
+import 'package:flutter_woocommerce/features/cart/ui/widgets/cart_coupon_field.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_woocommerce/features/cart/providers/cart_provider.dart';
 
@@ -39,6 +40,10 @@ class _CartScreenState extends State<CartScreen> {
 
                     // Items List
                     _CartItemsListView(items: items, cart: cart),
+
+                    const SizedBox(height: 16),
+                    // Coupon Input
+                    const CartCouponField(),
 
                     const SizedBox(height: 16),
                     // Order Summary scrolls with content
